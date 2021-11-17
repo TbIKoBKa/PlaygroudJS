@@ -1,6 +1,6 @@
 // Core
 import React, { FC, Suspense } from 'react';
-import { Route, Routes as RouterRoutes } from 'react-router';
+import { Routes as RouterRoutes, Route } from 'react-router-dom';
 
 // Pages
 import { Main } from '../pages';
@@ -8,15 +8,13 @@ import { Main } from '../pages';
 // Elements
 import { Spinner } from '../elements';
 
-export const Routes: FC = () => {
-    return (
-        <Suspense fallback = { <Spinner /> }>
-            <RouterRoutes>
-                <Route
-                    element = { <Main /> }
-                    path = '/'
-                />
-            </RouterRoutes>
-        </Suspense>
-    );
-};
+export const Routes: FC = () => (
+    <Suspense fallback = { <Spinner /> }>
+        <RouterRoutes>
+            <Route
+                element = { <Main /> }
+                path = '/'
+            />
+        </RouterRoutes>
+    </Suspense>
+);

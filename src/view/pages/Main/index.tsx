@@ -1,8 +1,8 @@
 // Core
 import React, { FC } from 'react';
 
-// Bus
-// import {} from '../../../bus/'
+// Containers
+import { MainBody, Footer, Header } from '../../containers';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -10,15 +10,12 @@ import { ErrorBoundary } from '../../components';
 // Styles
 import * as S from './styles';
 
-// Types
-type PropTypes = {
-    /* type props here */
-}
-
-const Main: FC<PropTypes> = () => {
+const Main: FC = () => {
     return (
         <S.Container>
-            Page: Main
+            <Header />
+            <MainBody />
+            <Footer />
         </S.Container>
     );
 };

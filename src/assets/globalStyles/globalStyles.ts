@@ -7,6 +7,15 @@ import reset from 'styled-reset';
 
 export const GlobalStyles = createGlobalStyle`
     ${reset}
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: #fff;
+    }
     
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
