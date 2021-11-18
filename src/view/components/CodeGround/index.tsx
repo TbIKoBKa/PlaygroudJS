@@ -1,9 +1,9 @@
 // Core
-import React, { ChangeEvent, FC, useEffect } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTogglersRedux } from '../../../bus/client/togglers';
 
 // Elements
-import { CodeInputArea, Label } from '../../elements';
+import { CodeInputArea, Label, Slider } from '../../elements';
 
 // Styles
 import { ContentContainer, Container } from './styles';
@@ -16,6 +16,12 @@ interface PropTypes {
 
 export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     const { togglersRedux: { isCodeTextareaFocused }, setTogglerAction } = useTogglersRedux();
+    const [ fontSize, setFontSize ] = useState<number | null>(null);
+
+    const onChangeFontSize = (newValue: number) => {
+        setFontSize(newValue);
+    };
+
     const onChangeTextArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
         onChangeCode(event.target.value);
     };
@@ -47,10 +53,24 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     return (
         <Container>
             <ContentContainer>
-                <Label fontSize = { 18 }>Settings</Label>
+                <Label
+                    fontSize = { 18 }
+                    marginBottom = { 10 }>
+                    Settings
+                </Label>
+                <Slider
+                    label = 'Font Size'
+                    max = { 30 }
+                    min = { 10 }
+                    start = { 20 }
+                    step = { 1 }
+                    value = { fontSize }
+                    onChangeValue = { onChangeFontSize }
+                />
             </ContentContainer>
             <ContentContainer main>
                 <CodeInputArea
+                    fontSize = { fontSize }
                     value = { code }
                     onBlur = { onChangeFocusTextArea }
                     onChange = { onChangeTextArea }
