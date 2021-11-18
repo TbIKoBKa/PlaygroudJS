@@ -17,6 +17,10 @@ export const GlobalStyles = createGlobalStyle`
         color: #fff;
     }
     
+    body {
+        overflow-y: hidden;
+    }
+    
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {

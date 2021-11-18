@@ -1,11 +1,11 @@
 {
-    "name": "boilerplate-frontend",
-    "version": "4.0.0",
-    "description": "boilerplate",
-    "author": "arziburst@gmail.com",
+    "name": "prayground",
+    "version": "0.1.0",
+    "description": "prayground for running js code",
+    "author": "zhenya.mormul@gmail.com",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Arziburst/boilerplate.git"
+        "url": "https://github.com/TbIKoBKa/playgroud"
     },
     "scripts": {
         "start": "cross-env-shell NODE_ENV=development ts-node -P \"./tsconfig.webpack.json\" \"./scripts/webpack/start\"",
