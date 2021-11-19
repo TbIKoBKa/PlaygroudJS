@@ -3,7 +3,7 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTogglersRedux } from '../../../bus/client/togglers';
 
 // Elements
-import { CodeInputArea, Label, Slider } from '../../elements';
+import { Accordion, CodeInputArea, Slider } from '../../elements';
 
 // Styles
 import { ContentContainer, Container } from './styles';
@@ -15,8 +15,21 @@ interface PropTypes {
 }
 
 export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
-    const { togglersRedux: { isCodeTextareaFocused }, setTogglerAction } = useTogglersRedux();
+    const {
+        togglersRedux: {
+            isCodeTextareaFocused,
+            isSettingVisible,
+            isAdditionVisible,
+            isCodeAreaVisible,
+        },
+        setTogglerAction,
+    } = useTogglersRedux();
+
     const [ fontSize, setFontSize ] = useState<number | null>(null);
+
+    const onSettingsHeaderClick = () => setTogglerAction({ type: 'isSettingVisible', value: !isSettingVisible });
+    const onAdditionHeaderClick = () => setTogglerAction({ type: 'isAdditionVisible', value: !isAdditionVisible });
+    const onCodeHeaderClick = () => setTogglerAction({ type: 'isCodeAreaVisible', value: !isCodeAreaVisible });
 
     const onChangeFontSize = (newValue: number) => {
         setFontSize(newValue);
@@ -53,32 +66,42 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     return (
         <Container>
             <ContentContainer>
-                <Label
-                    fontSize = { 18 }
-                    marginBottom = { 10 }>
-                    Settings
-                </Label>
-                <Slider
-                    label = 'Font Size'
-                    max = { 30 }
-                    min = { 10 }
-                    start = { 20 }
-                    step = { 1 }
-                    value = { fontSize }
-                    onChangeValue = { onChangeFontSize }
-                />
-            </ContentContainer>
-            <ContentContainer main>
-                <CodeInputArea
-                    fontSize = { fontSize }
-                    value = { code }
-                    onBlur = { onChangeFocusTextArea }
-                    onChange = { onChangeTextArea }
-                    onFocus = { onChangeFocusTextArea }
-                />
+                <Accordion
+                    label = 'Settings'
+                    open = { isSettingVisible }
+                    onClickHandle = { onSettingsHeaderClick }>
+                    <Slider
+                        label = 'Font Size'
+                        max = { 30 }
+                        min = { 10 }
+                        start = { 20 }
+                        step = { 1 }
+                        value = { fontSize }
+                        onChangeValue = { onChangeFontSize }
+                    />
+                </Accordion>
             </ContentContainer>
             <ContentContainer>
-                <Label fontSize = { 18 }>Addition</Label>
+                <Accordion
+                    label = 'Code'
+                    open = { isCodeAreaVisible }
+                    onClickHandle = { onCodeHeaderClick }>
+                    <CodeInputArea
+                        fontSize = { fontSize }
+                        value = { code }
+                        onBlur = { onChangeFocusTextArea }
+                        onChange = { onChangeTextArea }
+                        onFocus = { onChangeFocusTextArea }
+                    />
+                </Accordion>
+            </ContentContainer>
+            <ContentContainer>
+                <Accordion
+                    label = 'Addition'
+                    open = { isAdditionVisible }
+                    onClickHandle = { onAdditionHeaderClick }>
+
+                </Accordion>
             </ContentContainer>
         </Container>
     );

@@ -8,6 +8,9 @@ import { useSelector } from '../../../tools/hooks';
 const initialState = {
     isOnline:              navigator.onLine,
     isCodeTextareaFocused: false,
+    isSettingVisible:      false,
+    isCodeAreaVisible:     true,
+    isAdditionVisible:     false,
 };
 
 // Types
