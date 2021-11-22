@@ -21,11 +21,14 @@ type StyledAccordionProps = Omit<AccordionProps, 'onClickHandle'>
 
 // Styles
 const AccordionWrapper = styled.div(() => ({
-
+    display:       'flex',
+    flexDirection: 'column' as 'column',
+    height:        '100%',
 }));
 
 const AccordionHeader = styled.div<StyledAccordionProps>(() => ({
     display:        'flex',
+    flexDirection:  'row',
     justifyContent: 'space-between',
     padding:        '16px',
     cursor:         'pointer',
@@ -37,7 +40,7 @@ const AccordionHeader = styled.div<StyledAccordionProps>(() => ({
 
 const AccordionBody = styled.div<StyledAccordionProps>(({ open }) => ({
     padding:    '16px',
-    height:     `${open ? 'fit-content' : '0px'}`,
+    height:     `${open ? '100%' : '0px'}`,
     transition: 'height .2s ease-in-out',
 }));
 

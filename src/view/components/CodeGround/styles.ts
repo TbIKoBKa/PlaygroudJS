@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 // Interfaces
 interface ContentContainerProps {
-    max?: boolean
+    maxSize?: boolean
     active?: boolean
 }
 
@@ -14,10 +14,11 @@ export const Container = styled.section(() => ({
     height:        '100%',
 }));
 
-export const ContentContainer = styled.div<ContentContainerProps>(({ max, active }) => ({
+export const ContentContainer = styled.div<ContentContainerProps>(({ maxSize, active }) => ({
+    position:                 'relative',
     backgroundColor:          'rgb(51, 55, 82)',
     borderRadius:             '6px',
-    height:                   `${max && active ? '100%' : 'auto'}`,
+    height:                   `${maxSize && active ? '100%' : 'auto'}`,
     width:                    '100%',
     [ '&:not(:last-child)' ]: {
         marginBottom: '12px',
