@@ -39,6 +39,7 @@ const AccordionHeader = styled.div<StyledAccordionProps>(() => ({
 }));
 
 const AccordionBody = styled.div<StyledAccordionProps>(({ open }) => ({
+    position:   'relative' as 'relative',
     padding:    '16px',
     height:     `${open ? '100%' : '0px'}`,
     transition: 'height .2s ease-in-out',
