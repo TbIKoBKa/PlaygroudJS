@@ -81,7 +81,9 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
                     />
                 </Accordion>
             </ContentContainer>
-            <ContentContainer>
+            <ContentContainer
+                max
+                active = { isCodeAreaVisible }>
                 <Accordion
                     label = 'Code'
                     open = { isCodeAreaVisible }
