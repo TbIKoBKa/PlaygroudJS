@@ -14,5 +14,6 @@ export const CodeInputArea = styled.textarea<CodeInputAreaProps>(({ fontSize }) 
     backgroundColor: 'transparent',
     width:           '100%',
     height:          '100%',
+    fontFamily:      'Trebuchet MS',
     fontSize:        `${fontSize ? `${fontSize}px` : '14px'}`,
 }));

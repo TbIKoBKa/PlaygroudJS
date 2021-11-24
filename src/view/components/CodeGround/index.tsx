@@ -1,12 +1,16 @@
 // Core
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useTogglersRedux } from '../../../bus/client/togglers';
+import parse from 'html-react-parser';
 
 // Elements
 import { Accordion, CodeInputArea, Slider } from '../../elements';
 
 // Styles
 import { ContentContainer, Container } from './styles';
+
+// Helpers
+import { getParsedCode } from '../../../tools/helpers';
 
 // Interfaces
 interface PropTypes {
@@ -26,6 +30,10 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     } = useTogglersRedux();
 
     const [ fontSize, setFontSize ] = useState<number | null>(null);
+
+    useEffect(() => {
+        setFontSize(20);
+    }, []);
 
     const onSettingsHeaderClick = () => setTogglerAction({ type: 'isSettingVisible', value: !isSettingVisible });
     const onAdditionHeaderClick = () => setTogglerAction({ type: 'isAdditionVisible', value: !isAdditionVisible });
@@ -74,7 +82,6 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
                         label = 'Font Size'
                         max = { 30 }
                         min = { 10 }
-                        start = { 20 }
                         step = { 1 }
                         value = { fontSize }
                         onChangeValue = { onChangeFontSize }
@@ -96,8 +103,8 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
                         onChange = { onChangeTextArea }
                         onFocus = { onChangeFocusTextArea }>
                     </CodeInputArea>
-                    <div style = {{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, padding: '16px' }}>
-                        <p style = {{ color: 'coral' }}>{code}</p>
+                    <div style = {{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, padding: '16px', fontSize: `${fontSize ? `${fontSize}px` : '14px'}` }}>
+                        {parse(getParsedCode(code))}
                     </div>
                 </Accordion>
             </ContentContainer>
