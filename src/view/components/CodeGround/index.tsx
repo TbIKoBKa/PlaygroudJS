@@ -97,15 +97,22 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
                     onClickHandle = { onCodeHeaderClick }>
                     <CodeInputArea
                         fontSize = { fontSize }
-                        style = {{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, padding: '16px', opacity: 0, zIndex: 1000 }}
                         value = { code }
                         onBlur = { onChangeFocusTextArea }
                         onChange = { onChangeTextArea }
                         onFocus = { onChangeFocusTextArea }>
                     </CodeInputArea>
-                    <div style = {{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, padding: '16px', fontSize: `${fontSize ? `${fontSize}px` : '14px'}` }}>
+                    <pre style = {{
+                        position: 'absolute',
+                        width:    '100%',
+                        height:   '100%',
+                        top:      0,
+                        left:     0,
+                        padding:  '16px',
+                        fontSize: `${fontSize ? `${fontSize}px` : '14px'}`,
+                    }}>
                         {parse(getParsedCode(code))}
-                    </div>
+                    </pre>
                 </Accordion>
             </ContentContainer>
             <ContentContainer>
@@ -113,7 +120,6 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
                     label = 'Addition'
                     open = { isAdditionVisible }
                     onClickHandle = { onAdditionHeaderClick }>
-
                 </Accordion>
             </ContentContainer>
         </Container>

@@ -22,7 +22,7 @@ export const getParsedCode = (code: string) => {
         (str) => `${str[ 0 ] === '.' ? '.' : ''}<span style="color: ${colors.function}">${str.slice(str[ 0 ] === '.' ? 1 : 0, -1)}</span>${str.at(-1)}`,
     );
 
-    parsedCode = parsedCode.split('\n').map((line) => `<p style="line-height: normal; color: ${colors.default}">${line}</p>`)
+    parsedCode = parsedCode.split('\n').map((line) => `<p style="line-height: normal; color: ${colors.default}">${line || ' '}</p>`)
         .join('');
 
     return parsedCode;
