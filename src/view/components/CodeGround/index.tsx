@@ -1,5 +1,5 @@
 // Core
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, KeyboardEvent, useEffect, useState, useRef } from 'react';
 import { useTogglersRedux } from '../../../bus/client/togglers';
 import parse from 'html-react-parser';
 
@@ -30,10 +30,22 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     } = useTogglersRedux();
 
     const [ fontSize, setFontSize ] = useState<number | null>(null);
+    const selectionPosition = useRef<number>(-1);
+    const codeAreaRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         setFontSize(20);
     }, []);
+
+    useEffect(() => {
+        const codeAreaRefCurrent = codeAreaRef.current;
+        const selectionPositionCurrent = selectionPosition.current;
+
+        if (codeAreaRefCurrent && selectionPositionCurrent >= 0) {
+            codeAreaRefCurrent.setSelectionRange(selectionPositionCurrent + 4, selectionPositionCurrent + 4);
+            selectionPosition.current = -1;
+        }
+    }, [ code ]);
 
     const onSettingsHeaderClick = () => setTogglerAction({ type: 'isSettingVisible', value: !isSettingVisible });
     const onAdditionHeaderClick = () => setTogglerAction({ type: 'isAdditionVisible', value: !isAdditionVisible });
@@ -47,14 +59,18 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
         onChangeCode(event.target.value);
     };
 
-    const onKeyPressCallback = (event: KeyboardEvent) => {
-        if (isCodeTextareaFocused) {
-            switch (event.key) {
-                case 'Tab':
-                    event.preventDefault();
-                    onChangeCode(code + ' '.repeat(4));
-                    break;
-                default: break;
+    const onKeyDownHandle = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+
+            if (codeAreaRef.current) {
+                const selectionStart = codeAreaRef.current.selectionStart;
+
+                onChangeCode(code.substr(0, selectionStart).concat(' '.repeat(4), code.substr(selectionStart)));
+
+                console.log('before', selectionPosition.current);
+                selectionPosition.current = selectionStart;
+                console.log('after', selectionPosition.current);
             }
         }
     };
@@ -62,14 +78,6 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     const onChangeFocusTextArea = () => {
         setTogglerAction({ type: 'isCodeTextareaFocused', value: !isCodeTextareaFocused });
     };
-
-    useEffect(() => {
-        document.addEventListener('keydown', onKeyPressCallback);
-
-        return () => {
-            document.removeEventListener('keydown', onKeyPressCallback);
-        };
-    }, [ isCodeTextareaFocused, code ]);
 
     return (
         <Container>
@@ -97,11 +105,13 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
                     onClickHandle = { onCodeHeaderClick }>
                     <CodeInputArea
                         fontSize = { fontSize }
+                        ref = { codeAreaRef }
                         value = { code }
                         onBlur = { onChangeFocusTextArea }
                         onChange = { onChangeTextArea }
-                        onFocus = { onChangeFocusTextArea }>
-                    </CodeInputArea>
+                        onFocus = { onChangeFocusTextArea }
+                        onKeyDown = { onKeyDownHandle }
+                    />
                     <pre style = {{
                         position: 'absolute',
                         width:    '100%',
