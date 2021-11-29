@@ -2,7 +2,7 @@
 import React, { FC, useState } from 'react';
 
 // Components
-import { CodeGround, ResultGround } from '../../components';
+import { CodeGround, ResultGround, Menu } from '../../components';
 
 // Styles
 import { Container } from './styles';
@@ -16,6 +16,7 @@ export const MainBody: FC = () => {
 
     return (
         <Container>
+            <Menu />
             <CodeGround
                 code = { code }
                 onChangeCode = { onChangeCode }

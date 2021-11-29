@@ -9,6 +9,9 @@ import { Accordion, CodeInputArea, Slider } from '../../elements';
 // Styles
 import { ContentContainer, Container } from './styles';
 
+//Icons
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+
 // Helpers
 import { getParsedCode } from '../../../tools/helpers';
 
@@ -68,9 +71,7 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
 
                 onChangeCode(code.substr(0, selectionStart).concat(' '.repeat(4), code.substr(selectionStart)));
 
-                console.log('before', selectionPosition.current);
                 selectionPosition.current = selectionStart;
-                console.log('after', selectionPosition.current);
             }
         }
     };
@@ -83,6 +84,8 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
         <Container>
             <ContentContainer>
                 <Accordion
+                    direction = 'vertical'
+                    faIcon = { faChevronLeft }
                     label = 'Settings'
                     open = { isSettingVisible }
                     onClickHandle = { onSettingsHeaderClick }>
@@ -100,6 +103,8 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
                 maxSize
                 active = { isCodeAreaVisible }>
                 <Accordion
+                    direction = 'vertical'
+                    faIcon = { faChevronLeft }
                     label = 'Code'
                     open = { isCodeAreaVisible }
                     onClickHandle = { onCodeHeaderClick }>
@@ -127,6 +132,8 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
             </ContentContainer>
             <ContentContainer>
                 <Accordion
+                    direction = 'vertical'
+                    faIcon = { faChevronLeft }
                     label = 'Addition'
                     open = { isAdditionVisible }
                     onClickHandle = { onAdditionHeaderClick }>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Container = styled.main(() => ({
     display:                        'grid',
-    gridTemplateColumns:            'repeat(2, 1fr)',
+    gridTemplateColumns:            '1fr 3fr 2fr',
     columnGap:                      '20px',
     justifyContent:                 'space-between',
     backgroundColor:                'rgb(27, 34, 64)',
