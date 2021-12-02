@@ -16,6 +16,8 @@ interface AccordionProps {
     label?: string
     faIcon?: IconDefinition
     direction: 'vertical' | 'horizontal',
+    noAnimatedHeaderIcon?: boolean,
+    noBodyPadding?: boolean,
 }
 
 // Types
@@ -39,7 +41,9 @@ const AccordionWrapper = styled.div<StyledAccordionProps>(({ direction, open }) 
     }())}`,
 }));
 
-const AccordionHeader = styled.div<StyledAccordionProps>(({ open, direction }) => ({
+const AccordionHeader = styled.div<StyledAccordionProps>(({
+    open, direction,
+}) => ({
     display:        'flex',
     flexDirection:  'row',
     justifyContent: `${(function() {
@@ -57,18 +61,27 @@ const AccordionHeader = styled.div<StyledAccordionProps>(({ open, direction }) =
     cursor:        'pointer',
     borderRadius:  '6px',
     [ '&:hover' ]: {
-        backgroundColor: 'rgb(60, 65, 97)',
+        backgroundColor: 'rgb(71, 77, 115)',
     },
 }));
 
-const AccordionBody = styled.div<StyledAccordionProps>(({ open }) => ({
+const AccordionBody = styled.div<StyledAccordionProps>(({ open, noBodyPadding }) => ({
     position:   'relative' as 'relative',
-    padding:    '16px',
+    padding:    `${noBodyPadding ? '0px' : '16px'}`,
     height:     '100%',
     transition: 'height .2s ease-in-out',
 }));
 
-export const Accordion: FC<AccordionProps> = ({ open, onClickHandle, label, children, faIcon, direction }) => {
+export const Accordion: FC<AccordionProps> = ({
+    open,
+    onClickHandle,
+    label,
+    children,
+    faIcon,
+    direction,
+    noAnimatedHeaderIcon,
+    noBodyPadding,
+}) => {
     const onHeaderClickHandle = () => {
         onClickHandle(!open);
     };
@@ -98,7 +111,7 @@ export const Accordion: FC<AccordionProps> = ({ open, onClickHandle, label, chil
                     faIcon && (
                         <FontAwesomeIcon
                             icon = { faIcon }
-                            style = { direction === 'vertical' ? {
+                            style = { direction === 'vertical' && !noAnimatedHeaderIcon ? {
                                 transform:  `rotate(${open ? '-90deg' : '0deg'})`,
                                 transition: 'transform .2s ease-in-out',
                             } : {} }
@@ -112,6 +125,7 @@ export const Accordion: FC<AccordionProps> = ({ open, onClickHandle, label, chil
                         return (
                             <AccordionBody
                                 direction = { direction }
+                                noBodyPadding = { noBodyPadding }
                                 open = { open }>
                                 {children}
                             </AccordionBody>
@@ -121,6 +135,7 @@ export const Accordion: FC<AccordionProps> = ({ open, onClickHandle, label, chil
                     return open && (
                         <AccordionBody
                             direction = { direction }
+                            noBodyPadding = { noBodyPadding }
                             open = { open }>
                             {children}
                         </AccordionBody>

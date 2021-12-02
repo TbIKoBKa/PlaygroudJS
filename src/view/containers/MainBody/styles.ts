@@ -1,13 +1,15 @@
 // Core
 import styled from 'styled-components';
 
-export const Container = styled.main(() => ({
+interface ContainerProps {
+    isMenuVisible: boolean
+}
+
+export const Container = styled.main<ContainerProps>(({ isMenuVisible }) => ({
     display:                        'grid',
-    gridTemplateColumns:            '1fr 3fr 2fr',
-    columnGap:                      '20px',
+    gridTemplateColumns:            `${isMenuVisible ? '20vw 1fr 20vw' : '50px 1fr 20vw'}`,
+    columnGap:                      '12px',
     justifyContent:                 'space-between',
-    backgroundColor:                'rgb(27, 34, 64)',
-    padding:                        '12px 0px',
     fontSize:                       '18px',
     height:                         'inherit',
     [ '@media(max-width: 768px)' ]: {

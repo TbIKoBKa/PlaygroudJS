@@ -30,6 +30,5 @@ export const Container = styled.section<MenuProps>(({ open }) => ({
 
 export const MenuBody = styled.div(() => ({
     position:   'relative' as 'relative',
-    padding:    '16px',
     transition: 'height .2s ease-in-out',
 }));

@@ -15,7 +15,7 @@ interface SliderProps {
 
 // Styles
 const SliderWrapper = styled.div(() => ({
-    backgroundColor: 'rgb(63, 68, 102)',
+    backgroundColor: 'rgb(71, 77, 115)',
     padding:         '8px 14px',
     width:           'fit-content',
     borderRadius:    '6px',

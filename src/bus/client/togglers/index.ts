@@ -11,6 +11,8 @@ const initialState = {
     isSettingVisible:      false,
     isCodeAreaVisible:     true,
     isAdditionVisible:     false,
+    isMenuVisible:         true,
+    isFileSystemVisible:   true,
 };
 
 // Types
