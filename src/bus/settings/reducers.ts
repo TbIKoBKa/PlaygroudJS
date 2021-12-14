@@ -2,9 +2,9 @@
 import * as types from './types';
 
 export const setFontSize: types.SetFontSizeContract = (state, action) => {
-    if (state) {
-        state.fontSize = action.payload;
-    }
+    state.fontSize = action.payload;
+};
 
-    return state;
+export const setTabSize: types.SetTabSizeContract = (state, action) => {
+    state.tabSize = action.payload;
 };

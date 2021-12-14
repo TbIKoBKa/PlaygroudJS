@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, CSSProperties } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -18,6 +18,8 @@ interface AccordionProps {
     direction: 'vertical' | 'horizontal',
     noAnimatedHeaderIcon?: boolean,
     noBodyPadding?: boolean,
+    labelVisible?: boolean,
+    bodyStyle?: CSSProperties,
 }
 
 // Types
@@ -42,26 +44,34 @@ const AccordionWrapper = styled.div<StyledAccordionProps>(({ direction, open }) 
 }));
 
 const AccordionHeader = styled.div<StyledAccordionProps>(({
-    open, direction,
+    open, direction, labelVisible,
 }) => ({
     display:        'flex',
     flexDirection:  'row',
     justifyContent: `${(function() {
-        if (direction === 'horizontal') {
-            if (open) {
-                return 'space-between';
+        if (labelVisible) {
+            if (direction === 'horizontal') {
+                if (open) {
+                    return 'space-between';
+                }
+
+                return 'center';
             }
 
-            return 'center';
+            return 'space-between';
         }
 
-        return 'space-between';
+        return 'center';
     }())}`,
     padding:       '16px',
     cursor:        'pointer',
     borderRadius:  '6px',
     [ '&:hover' ]: {
         backgroundColor: 'rgb(71, 77, 115)',
+        [ '& > *' ]:     {
+            transform:  `${!labelVisible ? 'scale(1.3)' : 'scale(1)'}`,
+            transition: 'transform .2s ease-in-out',
+        },
     },
 }));
 
@@ -81,6 +91,8 @@ export const Accordion: FC<AccordionProps> = ({
     direction,
     noAnimatedHeaderIcon,
     noBodyPadding,
+    labelVisible = true,
+    bodyStyle,
 }) => {
     const onHeaderClickHandle = () => {
         onClickHandle(!open);
@@ -92,26 +104,35 @@ export const Accordion: FC<AccordionProps> = ({
             open = { open } >
             <AccordionHeader
                 direction = { direction }
+                labelVisible = { labelVisible }
                 open = { open }
                 onClick = { onHeaderClickHandle }>
                 { (function() {
-                    const labelJSX = <Label fontSize = { 18 }>{label}</Label>;
+                    const labelJSX = (
+                        <Label fontSize = { 18 }>
+                            {label}
+                        </Label>
+                    );
 
                     if (direction === 'horizontal') {
-                        if (open) {
+                        if (labelVisible) {
                             return labelJSX;
                         }
 
                         return null;
                     }
 
-                    return labelJSX;
+                    if (labelVisible) {
+                        return labelJSX;
+                    }
+
+                    return null;
                 }()) }
                 {
                     faIcon && (
                         <FontAwesomeIcon
                             icon = { faIcon }
-                            style = { direction === 'vertical' && !noAnimatedHeaderIcon ? {
+                            style = { direction === 'vertical' && !noAnimatedHeaderIcon && labelVisible ? {
                                 transform:  `rotate(${open ? '-90deg' : '0deg'})`,
                                 transition: 'transform .2s ease-in-out',
                             } : {} }
@@ -126,7 +147,8 @@ export const Accordion: FC<AccordionProps> = ({
                             <AccordionBody
                                 direction = { direction }
                                 noBodyPadding = { noBodyPadding }
-                                open = { open }>
+                                open = { open }
+                                style = { bodyStyle }>
                                 {children}
                             </AccordionBody>
                         );
@@ -136,7 +158,8 @@ export const Accordion: FC<AccordionProps> = ({
                         <AccordionBody
                             direction = { direction }
                             noBodyPadding = { noBodyPadding }
-                            open = { open }>
+                            open = { open }
+                            style = { bodyStyle }>
                             {children}
                         </AccordionBody>
                     );

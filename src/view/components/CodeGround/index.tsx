@@ -43,7 +43,7 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
         const selectionPositionCurrent = selectionPosition.current;
 
         if (codeAreaRefCurrent && selectionPositionCurrent >= 0) {
-            codeAreaRefCurrent.setSelectionRange(selectionPositionCurrent + 4, selectionPositionCurrent + 4);
+            codeAreaRefCurrent.setSelectionRange(selectionPositionCurrent, selectionPositionCurrent);
             selectionPosition.current = -1;
         }
     }, [ code ]);
@@ -55,15 +55,17 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     };
 
     const onKeyDownHandle = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (event.key === 'Tab') {
+        if (codeAreaRef.current && (event.key === 'Tab' || event.key === 'Enter')) {
             event.preventDefault();
 
-            if (codeAreaRef.current) {
-                const selectionStart = codeAreaRef.current.selectionStart;
+            const selectionStart = codeAreaRef.current.selectionStart;
 
-                onChangeCode(code.substr(0, selectionStart).concat(' '.repeat(4), code.substr(selectionStart)));
-
-                selectionPosition.current = selectionStart;
+            if (event.key === 'Tab') {
+                onChangeCode(code.substring(0, selectionStart).concat(' '.repeat(settings.tabSize), code.substring(selectionStart)));
+                selectionPosition.current = Number(selectionStart) + Number(settings.tabSize);
+            } else if (event.key === 'Enter') {
+                onChangeCode(code.substring(0, selectionStart).concat('\n', code.substring(selectionStart)));
+                selectionPosition.current = selectionStart + 1;
             }
         }
     };

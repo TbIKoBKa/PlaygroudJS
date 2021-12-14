@@ -19,6 +19,7 @@ const SliderWrapper = styled.div(() => ({
     padding:         '8px 14px',
     width:           'fit-content',
     borderRadius:    '6px',
+    display:         'inline-block',
 }));
 
 export const Slider: FC<SliderProps> = ({ max, min, step, label, value, onChangeValue }) => {

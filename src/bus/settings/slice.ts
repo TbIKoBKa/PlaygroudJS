@@ -7,11 +7,12 @@ import * as types from './types';
 // Reducers
 import * as reducers from './reducers';
 
-const initialState = {
+const initialState: types.Settings = {
     fontSize: 20,
+    tabSize:  4,
 };
 
-export const settingsSlice = createSlice<types.SettingsState, typeof reducers>({
+export const settingsSlice = createSlice<types.Settings, typeof reducers>({
     name: 'settings',
     initialState,
     reducers,
