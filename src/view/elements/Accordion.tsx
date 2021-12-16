@@ -20,6 +20,7 @@ interface AccordionProps {
     noBodyPadding?: boolean,
     labelVisible?: boolean,
     bodyStyle?: CSSProperties,
+    headerStyle?: CSSProperties,
 }
 
 // Types
@@ -41,6 +42,7 @@ const AccordionWrapper = styled.div<StyledAccordionProps>(({ direction, open }) 
 
         return '100%';
     }())}`,
+    transition: 'width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;',
 }));
 
 const AccordionHeader = styled.div<StyledAccordionProps>(({
@@ -65,7 +67,7 @@ const AccordionHeader = styled.div<StyledAccordionProps>(({
     }())}`,
     padding:       '16px',
     cursor:        'pointer',
-    borderRadius:  '6px',
+    borderRadius:  `${open ? '6px 6px 0 0' : '6px'}`,
     [ '&:hover' ]: {
         backgroundColor: 'rgb(71, 77, 115)',
         [ '& > *' ]:     {
@@ -76,10 +78,11 @@ const AccordionHeader = styled.div<StyledAccordionProps>(({
 }));
 
 const AccordionBody = styled.div<StyledAccordionProps>(({ open, noBodyPadding }) => ({
-    position:   'relative' as 'relative',
-    padding:    `${noBodyPadding ? '0px' : '16px'}`,
-    height:     '100%',
-    transition: 'height .2s ease-in-out',
+    position:     'relative' as 'relative',
+    padding:      `${noBodyPadding ? '0px' : '16px'}`,
+    height:       '100%',
+    transition:   'height .2s ease-in-out',
+    borderRadius: `${open ? '0 0 6px 6px' : '0'}`,
 }));
 
 export const Accordion: FC<AccordionProps> = ({
@@ -93,6 +96,7 @@ export const Accordion: FC<AccordionProps> = ({
     noBodyPadding,
     labelVisible = true,
     bodyStyle,
+    headerStyle,
 }) => {
     const onHeaderClickHandle = () => {
         onClickHandle(!open);
@@ -106,6 +110,7 @@ export const Accordion: FC<AccordionProps> = ({
                 direction = { direction }
                 labelVisible = { labelVisible }
                 open = { open }
+                style = { headerStyle }
                 onClick = { onHeaderClickHandle }>
                 { (function() {
                     const labelJSX = (

@@ -5,14 +5,26 @@ import React, { FC } from 'react';
 import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useSettings } from '../../../bus/settings';
 
+// Components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 // Elements
-import { Label, Accordion, Slider } from '../../elements';
+import { Label, Accordion, Slider, Button } from '../../elements';
 
 // Styles
 import { Container, MenuBody } from './styles';
 
 // Icons
-import { faBars, faCog, faFolder, faFile, faFileAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+    faBars,
+    faCog,
+    faFolder,
+    faFile,
+    faFileAlt,
+    faPlus,
+    faInbox,
+    faPaperPlane,
+} from '@fortawesome/free-solid-svg-icons';
 
 export const Menu: FC = () => {
     const { settings, setFontSize, setTabSize } = useSettings();
@@ -60,6 +72,20 @@ export const Menu: FC = () => {
         setTabSize(newValue);
     };
 
+    const onEmailButtonClick = () => {
+        console.log('handle');
+
+        const link = 'mailto:zhenya.mormul@gmail.com';
+        window.open(link, 'MailTo');
+    };
+
+    const onTelegramButtonClick = () => {
+        console.log('handle');
+
+        const link = 'https://t.me/TblKoBKa';
+        window.open(link, 'Telegram');
+    };
+
     return (
         <Container open = { isMenuVisible }>
             <Accordion
@@ -73,6 +99,9 @@ export const Menu: FC = () => {
                 <MenuBody>
                     <Accordion
                         noAnimatedHeaderIcon
+                        bodyStyle = {{
+                            backgroundColor: 'rgb(52, 57, 84)',
+                        }}
                         direction = 'vertical'
                         faIcon = { faFileAlt }
                         label = 'File System'
@@ -82,7 +111,12 @@ export const Menu: FC = () => {
                         <Label fontSize = { 36 }>File System</Label>
                     </Accordion>
                     <Accordion
-                        bodyStyle = {{ display: 'flex', justifyContent: 'space-between' }}
+                        bodyStyle = {{
+                            display:         'flex',
+                            justifyContent:  'space-between',
+                            flexWrap:        'wrap',
+                            backgroundColor: 'rgb(52, 57, 84)',
+                        }}
                         direction = 'vertical'
                         faIcon = { faCog }
                         label = 'Settings'
@@ -107,12 +141,25 @@ export const Menu: FC = () => {
                         />
                     </Accordion>
                     <Accordion
+                        bodyStyle = {{
+                            backgroundColor: 'rgb(52, 57, 84)',
+                        }}
                         direction = 'vertical'
                         faIcon = { faPlus }
                         label = 'Addition'
                         labelVisible = { isMenuVisible }
                         open = { isAdditionVisible }
                         onClickHandle = { toggleAdditionVisibility }>
+                        <Button
+                            faIcon = { faInbox }
+                            onClick = { onEmailButtonClick }>
+                            Email
+                        </Button>
+                        <Button
+                            faIcon = { faPaperPlane }
+                            onClick = { onTelegramButtonClick }>
+                            Telegram
+                        </Button>
                     </Accordion>
                 </MenuBody>
             </Accordion>
