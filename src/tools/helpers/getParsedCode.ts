@@ -28,7 +28,6 @@ export const getParsedCode = (code: string) => {
         .replaceAll(/import|export|return/g, (str) => `<span style="color: ${colors.modules}">${str}</span>`)
         .replaceAll(/'.*'/g, (str) => `<span style="color: ${colors.string}">${str}</span>`);
 
-
     parsedCode = parsedCode.split('\n').map((line) => `<p style="line-height: normal; color: ${colors.default}">${line || ' '}</p>`)
         .join('');
 

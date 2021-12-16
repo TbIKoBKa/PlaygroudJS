@@ -94,7 +94,7 @@ export const Button: FC<ButtonProps> = ({ size = 'medium', faIcon, children, onC
                 <FontAwesomeIcon
                     icon = { faIcon }
                     style = {{
-                        marginRight: '8px',
+                        marginRight: `${children ? '8px' : '0px'}`,
                     }}
                 />
             )}

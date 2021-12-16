@@ -4,12 +4,10 @@ import React, { FC } from 'react';
 // Hooks
 import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useSettings } from '../../../bus/settings';
-
-// Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useFileSystem } from '../../../bus/filesystem';
 
 // Elements
-import { Label, Accordion, Slider, Button } from '../../elements';
+import { Accordion, Slider, Button } from '../../elements';
 
 // Styles
 import { Container, MenuBody } from './styles';
@@ -18,16 +16,19 @@ import { Container, MenuBody } from './styles';
 import {
     faBars,
     faCog,
-    faFolder,
-    faFile,
+    faFileMedical,
     faFileAlt,
     faPlus,
+    faFolderPlus,
     faInbox,
     faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const Menu: FC = () => {
     const { settings, setFontSize, setTabSize } = useSettings();
+    const { filesystem, createNewFile, saveFile, setActiveFile } = useFileSystem();
+
+    console.log('fs', filesystem);
 
     const {
         togglersRedux: {
@@ -86,6 +87,14 @@ export const Menu: FC = () => {
         window.open(link, 'Telegram');
     };
 
+    const onCreateFileButtonClick = () => {
+        createNewFile({ type: 'file', name: 'test.txt' });
+    };
+
+    const onCreateDirectoryButtonClick = () => {
+        createNewFile({ type: 'directory', name: 'test' });
+    };
+
     return (
         <Container open = { isMenuVisible }>
             <Accordion
@@ -108,7 +117,18 @@ export const Menu: FC = () => {
                         labelVisible = { isMenuVisible }
                         open = { isFileSystemVisible }
                         onClickHandle = { toggleFileSystemVisibility }>
-                        <Label fontSize = { 36 }>File System</Label>
+                        <div style = {{ display: 'flex', justifyContent: 'end' }}>
+                            <Button
+                                faIcon = { faFileMedical }
+                                size = 'small'
+                                onClick = { onCreateFileButtonClick }
+                            />
+                            <Button
+                                faIcon = { faFolderPlus }
+                                size = 'small'
+                                onClick = { onCreateDirectoryButtonClick }
+                            />
+                        </div>
                     </Accordion>
                     <Accordion
                         bodyStyle = {{
