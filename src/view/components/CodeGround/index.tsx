@@ -1,12 +1,22 @@
 // Core
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useTogglersRedux } from '../../../bus/client/togglers';
+import React, { ChangeEvent, FC, KeyboardEvent, useEffect, useRef } from 'react';
+import parse from 'html-react-parser';
 
 // Elements
-import { Accordion, CodeInputArea, Slider } from '../../elements';
+import { Accordion, CodeInputArea } from '../../elements';
 
 // Styles
 import { ContentContainer, Container } from './styles';
+
+// Hooks
+import { useTogglersRedux } from '../../../bus/client/togglers';
+import { useSettings } from '../../../bus/settings';
+
+// Helpers
+import { getParsedCode } from '../../../tools/helpers';
+
+// Icons
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 // Interfaces
 interface PropTypes {
@@ -18,35 +28,44 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     const {
         togglersRedux: {
             isCodeTextareaFocused,
-            isSettingVisible,
-            isAdditionVisible,
             isCodeAreaVisible,
         },
         setTogglerAction,
     } = useTogglersRedux();
 
-    const [ fontSize, setFontSize ] = useState<number | null>(null);
+    const { settings } = useSettings();
 
-    const onSettingsHeaderClick = () => setTogglerAction({ type: 'isSettingVisible', value: !isSettingVisible });
-    const onAdditionHeaderClick = () => setTogglerAction({ type: 'isAdditionVisible', value: !isAdditionVisible });
+    const selectionPosition = useRef<number>(-1);
+    const codeAreaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        const codeAreaRefCurrent = codeAreaRef.current;
+        const selectionPositionCurrent = selectionPosition.current;
+
+        if (codeAreaRefCurrent && selectionPositionCurrent >= 0) {
+            codeAreaRefCurrent.setSelectionRange(selectionPositionCurrent, selectionPositionCurrent);
+            selectionPosition.current = -1;
+        }
+    }, [ code ]);
+
     const onCodeHeaderClick = () => setTogglerAction({ type: 'isCodeAreaVisible', value: !isCodeAreaVisible });
-
-    const onChangeFontSize = (newValue: number) => {
-        setFontSize(newValue);
-    };
 
     const onChangeTextArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
         onChangeCode(event.target.value);
     };
 
-    const onKeyPressCallback = (event: KeyboardEvent) => {
-        if (isCodeTextareaFocused) {
-            switch (event.key) {
-                case 'Tab':
-                    event.preventDefault();
-                    onChangeCode(code + ' '.repeat(4));
-                    break;
-                default: break;
+    const onKeyDownHandle = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (codeAreaRef.current && (event.key === 'Tab' || event.key === 'Enter')) {
+            event.preventDefault();
+
+            const selectionStart = codeAreaRef.current.selectionStart;
+
+            if (event.key === 'Tab') {
+                onChangeCode(code.substring(0, selectionStart).concat(' '.repeat(settings.tabSize), code.substring(selectionStart)));
+                selectionPosition.current = Number(selectionStart) + Number(settings.tabSize);
+            } else if (event.key === 'Enter') {
+                onChangeCode(code.substring(0, selectionStart).concat('\n', code.substring(selectionStart)));
+                selectionPosition.current = selectionStart + 1;
             }
         }
     };
@@ -55,54 +74,37 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
         setTogglerAction({ type: 'isCodeTextareaFocused', value: !isCodeTextareaFocused });
     };
 
-    useEffect(() => {
-        document.addEventListener('keydown', onKeyPressCallback);
-
-        return () => {
-            document.removeEventListener('keydown', onKeyPressCallback);
-        };
-    }, [ isCodeTextareaFocused, code ]);
-
     return (
         <Container>
-            <ContentContainer>
-                <Accordion
-                    label = 'Settings'
-                    open = { isSettingVisible }
-                    onClickHandle = { onSettingsHeaderClick }>
-                    <Slider
-                        label = 'Font Size'
-                        max = { 30 }
-                        min = { 10 }
-                        start = { 20 }
-                        step = { 1 }
-                        value = { fontSize }
-                        onChangeValue = { onChangeFontSize }
-                    />
-                </Accordion>
-            </ContentContainer>
             <ContentContainer
                 maxSize
                 active = { isCodeAreaVisible }>
                 <Accordion
+                    direction = 'vertical'
+                    faIcon = { faChevronLeft }
                     label = 'Code'
                     open = { isCodeAreaVisible }
                     onClickHandle = { onCodeHeaderClick }>
                     <CodeInputArea
-                        fontSize = { fontSize }
+                        fontSize = { settings.fontSize }
+                        ref = { codeAreaRef }
                         value = { code }
                         onBlur = { onChangeFocusTextArea }
                         onChange = { onChangeTextArea }
                         onFocus = { onChangeFocusTextArea }
+                        onKeyDown = { onKeyDownHandle }
                     />
-                </Accordion>
-            </ContentContainer>
-            <ContentContainer>
-                <Accordion
-                    label = 'Addition'
-                    open = { isAdditionVisible }
-                    onClickHandle = { onAdditionHeaderClick }>
-
+                    <pre style = {{
+                        position: 'absolute',
+                        width:    '100%',
+                        height:   '100%',
+                        top:      0,
+                        left:     0,
+                        padding:  '16px',
+                        fontSize: `${settings?.fontSize ? `${settings.fontSize}px` : '14px'}`,
+                    }}>
+                        {parse(getParsedCode(code))}
+                    </pre>
                 </Accordion>
             </ContentContainer>
         </Container>

@@ -32,4 +32,17 @@ export const GlobalStyles = createGlobalStyle`
     input[type=number] {
         -moz-appearance: textfield;
     }
+
+    @keyframes animate {
+        0% {
+            width: 0;
+            height: 0;
+            opacity: 0.5;
+        }
+        100% {
+            width: 500px;
+            height: 500px;
+            opacity: 0;
+        }
+    }
 `;

@@ -1,5 +1,5 @@
 // Core
-import React, { ChangeEvent, FC, useEffect } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import styled from 'styled-components';
 import { Label } from '.';
 
@@ -8,7 +8,6 @@ interface SliderProps {
     min: number,
     max: number,
     step?: number,
-    start?: number,
     label?: string,
     value: number | null,
     onChangeValue: Function,
@@ -16,17 +15,14 @@ interface SliderProps {
 
 // Styles
 const SliderWrapper = styled.div(() => ({
-    backgroundColor: 'rgb(63, 68, 102)',
+    backgroundColor: 'rgb(71, 77, 115)',
     padding:         '8px 14px',
     width:           'fit-content',
     borderRadius:    '6px',
+    display:         'inline-block',
 }));
 
-export const Slider: FC<SliderProps> = ({ max, min, step, start, label, value, onChangeValue }) => {
-    useEffect(() => {
-        onChangeValue(start);
-    }, []);
-
+export const Slider: FC<SliderProps> = ({ max, min, step, label, value, onChangeValue }) => {
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         onChangeValue(event.target.value);
     };
