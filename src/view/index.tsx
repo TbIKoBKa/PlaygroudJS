@@ -2,8 +2,11 @@
 import React, { FC, useEffect, useCallback } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
-// Containers
+// Routes
 import { Routes } from './routes';
+
+// Containers
+import { Snacks } from './containers';
 
 // Hooks
 import { useLocalStorage } from '../tools/hooks';
@@ -40,6 +43,7 @@ export const App: FC = () => {
             <GlobalStyles />
             <AppContainer>
                 <Routes />
+                <Snacks />
             </AppContainer>
         </ThemeProvider>
     );

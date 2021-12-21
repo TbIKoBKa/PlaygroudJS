@@ -6,6 +6,7 @@ import togglers from '../../bus/client/togglers';
 import errors from '../../bus/client/errors';
 import settings from '../../bus/settings/slice';
 import filesystem from '../../bus/filesystem/slice';
+import snacks from '../../bus/snacks/slice';
 
 // Middleware
 import { middleware, sagaMiddleware } from './middleware';
@@ -19,6 +20,7 @@ export const store = configureStore({
         errors,
         settings,
         filesystem,
+        snacks,
     },
     middleware,
     devTools: process.env.NODE_ENV !== 'production',

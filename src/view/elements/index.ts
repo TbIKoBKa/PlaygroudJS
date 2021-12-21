@@ -11,3 +11,4 @@ export * from './FileTree';
 export * from './FileSystem';
 export * from './Settings';
 export * from './Addition';
+export * from './Snack';
