@@ -1,20 +1,27 @@
 // Core
 import React, { FC, ReactNode, Fragment } from 'react';
+import styled from 'styled-components';
 
 // Elements
-import { File } from '../../elements';
-
-// Styles
-import { TreeContainer } from './styles';
+import { File } from './';
 
 // Types
-import { FileSystemState } from '../../../bus/filesystem/types';
+import { FileSystemState } from '../../bus/filesystem/types';
 
 // Interfaces
 interface FileTreeProps {
     filesystem: FileSystemState
     onClickFile: (fullpath: string) => void
 }
+
+// Styles
+export const TreeContainer = styled.div(({ children }) => ({
+    marginTop:   `${children === null ? '0px' : '12px'}`,
+    [ '& > *' ]: {
+        display: 'block',
+        width:   '100%',
+    },
+}));
 
 export const FileTree: FC<FileTreeProps> = ({ filesystem, onClickFile }) => {
     let activeDirectory = filesystem.fs;

@@ -6,26 +6,14 @@ import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useSettings } from '../../../bus/settings';
 import { useFileSystem } from '../../../bus/filesystem';
 
-// Components
-import { FileTree } from '../';
-
 // Elements
-import { Accordion, Slider, Button } from '../../elements';
+import { Accordion, Addition, FileSystem, Settings } from '../../elements';
 
 // Styles
 import { Container, MenuBody } from './styles';
 
 // Icons
-import {
-    faBars,
-    faCog,
-    faFileMedical,
-    faFileAlt,
-    faPlus,
-    faFolderPlus,
-    faInbox,
-    faPaperPlane,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 export const Menu: FC = () => {
     const { settings, setFontSize, setTabSize } = useSettings();
@@ -107,88 +95,30 @@ export const Menu: FC = () => {
                 open = { isMenuVisible }
                 onClickHandle = { toggleMenuVisibility }>
                 <MenuBody>
-                    <Accordion
-                        noAnimatedHeaderIcon
-                        bodyStyle = {{
-                            backgroundColor: 'rgb(52, 57, 84)',
-                        }}
-                        direction = 'vertical'
-                        faIcon = { faFileAlt }
-                        label = 'File System'
-                        labelVisible = { isMenuVisible }
-                        open = { isFileSystemVisible }
-                        onClickHandle = { toggleFileSystemVisibility }>
-                        <div style = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <p>{filesystem.activePath || 'No active file'}</p>
-                            <div style = {{ display: 'flex', justifyContent: 'end' }}>
-                                <Button
-                                    faIcon = { faFileMedical }
-                                    size = 'small'
-                                    onClick = { onCreateFileButtonClick }
-                                />
-                                <Button
-                                    faIcon = { faFolderPlus }
-                                    size = 'small'
-                                    onClick = { onCreateDirectoryButtonClick }
-                                />
-                            </div>
-                        </div>
-                        <FileTree
-                            filesystem = { filesystem }
-                            onClickFile = { onClickFile }
-                        />
-                    </Accordion>
-                    <Accordion
-                        bodyStyle = {{
-                            display:         'flex',
-                            justifyContent:  'space-between',
-                            flexWrap:        'wrap',
-                            backgroundColor: 'rgb(52, 57, 84)',
-                        }}
-                        direction = 'vertical'
-                        faIcon = { faCog }
-                        label = 'Settings'
-                        labelVisible = { isMenuVisible }
-                        open = { isSettingVisible }
-                        onClickHandle = { toggleSettingsVisibility }>
-                        <Slider
-                            label = 'Font Size'
-                            max = { 30 }
-                            min = { 10 }
-                            step = { 1 }
-                            value = { settings.fontSize }
-                            onChangeValue = { onChangeFontSize }
-                        />
-                        <Slider
-                            label = 'Tab Size'
-                            max = { 10 }
-                            min = { 1 }
-                            step = { 1 }
-                            value = { settings.tabSize }
-                            onChangeValue = { onChangeTabSize }
-                        />
-                    </Accordion>
-                    <Accordion
-                        bodyStyle = {{
-                            backgroundColor: 'rgb(52, 57, 84)',
-                        }}
-                        direction = 'vertical'
-                        faIcon = { faPlus }
-                        label = 'Addition'
-                        labelVisible = { isMenuVisible }
-                        open = { isAdditionVisible }
-                        onClickHandle = { toggleAdditionVisibility }>
-                        <Button
-                            faIcon = { faInbox }
-                            onClick = { onEmailButtonClick }>
-                            Email
-                        </Button>
-                        <Button
-                            faIcon = { faPaperPlane }
-                            onClick = { onTelegramButtonClick }>
-                            Telegram
-                        </Button>
-                    </Accordion>
+                    <FileSystem
+                        filesystem = { filesystem }
+                        isFileSystemVisible = { isFileSystemVisible }
+                        isMenuVisible = { isMenuVisible }
+                        toggleFileSystemVisibility = { toggleFileSystemVisibility }
+                        onClickFile = { onClickFile }
+                        onCreateDirectoryButtonClick = { onCreateDirectoryButtonClick }
+                        onCreateFileButtonClick = { onCreateFileButtonClick }
+                    />
+                    <Settings
+                        isMenuVisible = { isMenuVisible }
+                        isSettingVisible = { isSettingVisible }
+                        settings = { settings }
+                        toggleSettingsVisibility = { toggleSettingsVisibility }
+                        onChangeFontSize = { onChangeFontSize }
+                        onChangeTabSize = { onChangeTabSize }
+                    />
+                    <Addition
+                        isAdditionVisible = { isAdditionVisible }
+                        isMenuVisible = { isMenuVisible }
+                        toggleAdditionVisibility = { toggleAdditionVisibility }
+                        onEmailButtonClick = { onEmailButtonClick }
+                        onTelegramButtonClick = { onTelegramButtonClick }
+                    />
                 </MenuBody>
             </Accordion>
         </Container>
