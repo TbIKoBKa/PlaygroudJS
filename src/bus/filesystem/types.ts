@@ -15,7 +15,7 @@ export interface File extends GeneralData {
 }
 
 export interface Directory extends GeneralData {
-    content: Array<File | Directory> | null
+    content: Array<File | Directory>
 }
 
 // Payload
@@ -25,7 +25,7 @@ export type SaveFileTextContentFileSystemPayload = Pick<File, 'fullPath' | 'cont
 
 // State
 export type FileSystemState = {
-    fs: Array<File | Directory> | null
+    fs: Array<File | Directory>
     activePath: GeneralData['fullPath']
 }
 

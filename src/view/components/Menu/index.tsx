@@ -6,6 +6,9 @@ import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useSettings } from '../../../bus/settings';
 import { useFileSystem } from '../../../bus/filesystem';
 
+// Components
+import { FileTree } from '../';
+
 // Elements
 import { Accordion, Slider, Button } from '../../elements';
 
@@ -27,8 +30,6 @@ import {
 export const Menu: FC = () => {
     const { settings, setFontSize, setTabSize } = useSettings();
     const { filesystem, createNewFile, saveFile, setActiveFile } = useFileSystem();
-
-    console.log('fs', filesystem);
 
     const {
         togglersRedux: {
@@ -74,15 +75,11 @@ export const Menu: FC = () => {
     };
 
     const onEmailButtonClick = () => {
-        console.log('handle');
-
         const link = 'mailto:zhenya.mormul@gmail.com';
         window.open(link, 'MailTo');
     };
 
     const onTelegramButtonClick = () => {
-        console.log('handle');
-
         const link = 'https://t.me/TblKoBKa';
         window.open(link, 'Telegram');
     };
@@ -93,6 +90,10 @@ export const Menu: FC = () => {
 
     const onCreateDirectoryButtonClick = () => {
         createNewFile({ type: 'directory', name: 'test' });
+    };
+
+    const onClickFile = (fullPath: string) => {
+        setActiveFile({ fullPath });
     };
 
     return (
@@ -117,18 +118,25 @@ export const Menu: FC = () => {
                         labelVisible = { isMenuVisible }
                         open = { isFileSystemVisible }
                         onClickHandle = { toggleFileSystemVisibility }>
-                        <div style = {{ display: 'flex', justifyContent: 'end' }}>
-                            <Button
-                                faIcon = { faFileMedical }
-                                size = 'small'
-                                onClick = { onCreateFileButtonClick }
-                            />
-                            <Button
-                                faIcon = { faFolderPlus }
-                                size = 'small'
-                                onClick = { onCreateDirectoryButtonClick }
-                            />
+                        <div style = {{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <p>{filesystem.activePath || 'No active file'}</p>
+                            <div style = {{ display: 'flex', justifyContent: 'end' }}>
+                                <Button
+                                    faIcon = { faFileMedical }
+                                    size = 'small'
+                                    onClick = { onCreateFileButtonClick }
+                                />
+                                <Button
+                                    faIcon = { faFolderPlus }
+                                    size = 'small'
+                                    onClick = { onCreateDirectoryButtonClick }
+                                />
+                            </div>
                         </div>
+                        <FileTree
+                            filesystem = { filesystem }
+                            onClickFile = { onClickFile }
+                        />
                     </Accordion>
                     <Accordion
                         bodyStyle = {{

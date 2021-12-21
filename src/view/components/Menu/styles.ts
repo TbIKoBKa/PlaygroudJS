@@ -16,18 +16,6 @@ export const Container = styled.section<MenuProps>(({ open }) => ({
     transition:      'width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;',
 }));
 
-// export const MenuHeader = styled.div<MenuProps>(({ open }) => ({
-//     display:        'flex',
-//     flexDirection:  'row' as 'row',
-//     justifyContent: 'space-between',
-//     padding:        '16px',
-//     cursor:         'pointer',
-//     borderRadius:   '6px',
-//     [ '&:hover' ]:  {
-//         backgroundColor: 'rgb(63, 68, 102)',
-//     },
-// }));
-
 export const MenuBody = styled.div(() => ({
     position:   'relative' as 'relative',
     transition: 'height .2s ease-in-out',

@@ -5,3 +5,4 @@ export * from './CodeInputArea';
 export * from './Slider';
 export * from './Accordion';
 export * from './Button';
+export * from './FileTreeFile';

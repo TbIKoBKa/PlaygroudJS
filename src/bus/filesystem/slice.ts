@@ -8,8 +8,8 @@ import * as types from './types';
 import * as reducers from './reducers';
 
 const initialState: types.FileSystemState = {
-    activePath: '',
-    fs:         null,
+    activePath: '/',
+    fs:         [],
 };
 
 export const filesystemSlice = createSlice<types.FileSystemState, typeof reducers>({

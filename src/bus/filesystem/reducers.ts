@@ -17,45 +17,40 @@ export const createNewFile: types.AddFileToFileSystemContract = (state, action) 
         ? {
             changed:  created,
             created,
-            content:  null,
-            fullPath: `${state.activePath}/${name}`,
+            content:  [],
+            fullPath: `${state.activePath}${name}/`,
             name,
             type,
         } : {
             changed:  created,
             created,
             content:  '',
-            fullPath: `${state.activePath}/${name}`,
+            fullPath: `${state.activePath}${name}/`,
             name,
             type,
         };
 
-    const crumbsPath = state.activePath.split('/');
+    const crumbsPath = state.activePath.split('/').slice(1);
+
     let activeDirectory = state.fs;
 
     (function addFile() {
         const crumb = crumbsPath.shift();
 
-        if (crumb && activeDirectory) {
+        if (crumb && activeDirectory.length) {
             const foundDirectory = activeDirectory.find((dir) => {
                 return dir.name === crumb;
             });
 
             if (foundDirectory) {
-                if (typeof foundDirectory.content === 'string') {
-                    activeDirectory = null;
-                } else {
+                if (typeof foundDirectory.content !== 'string') {
                     activeDirectory = foundDirectory.content;
+                    addFile();
                 }
-            } else {
-                activeDirectory = null;
             }
-
-            addFile();
         } else if (crumb && !activeDirectory) {
-            // Create addition firectories
-        } else {
-            activeDirectory = [];
+            //TODO Create additional directories
+        } else if (!activeDirectory.find((file) => file.name === createdFile.name)) {
             activeDirectory.push(createdFile);
         }
     }());
@@ -78,7 +73,7 @@ export const saveFile: types.SaveFileTextContentFileSystemContract = (state, act
 
             if (foundDirectory) {
                 if (typeof foundDirectory.content === 'string') {
-                    activeDirectory = null;
+                    activeDirectory = [];
 
                     foundDirectory.content = content;
                     foundDirectory.changed = changed;
@@ -86,7 +81,7 @@ export const saveFile: types.SaveFileTextContentFileSystemContract = (state, act
                     activeDirectory = foundDirectory.content;
                 }
             } else {
-                activeDirectory = null;
+                activeDirectory = [];
             }
 
             changeFile();
