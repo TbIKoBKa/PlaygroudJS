@@ -5,7 +5,7 @@ import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 export interface Snack {
     id: string,
     title: string,
-    type: 'info' | 'warn' | 'error' | 'success'
+    type: 'info' | 'warn' | 'error' | 'success',
 }
 
 // State

@@ -14,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
 
     html {
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        color: #fff;
+        color: ${({ theme }) => theme.font};
     }
     
     body {

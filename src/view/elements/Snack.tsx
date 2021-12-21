@@ -19,7 +19,8 @@ interface SnackProps extends SnackType {
 // Styles
 const SnackWrapper = styled.div<Pick<SnackProps, 'type'>>(({ type, theme }) => ({
     display:         'flex',
-    justifyContent:  'space-between',
+    justifyContent:  'start',
+    width:           'fit-content',
     padding:         '10px 22px',
     borderRadius:    '6px',
     backgroundColor: `${theme.snacks[ type ]}`,

@@ -27,11 +27,11 @@ export const ResultContainer = styled.div(() => ({
     overflowY:       'auto' as 'auto',
 }));
 
-export const Button = styled.button(() => ({
+export const Button = styled.button(({ theme }) => ({
     minHeight:       '50px',
     backgroundColor: 'rgb(40, 43, 64)',
     borderRadius:    '6px',
-    color:           '#fff',
+    color:           theme.font,
     fontFamily:      'inherit',
     fontSize:        '20px',
 }));

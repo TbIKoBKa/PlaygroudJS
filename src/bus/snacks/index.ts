@@ -22,10 +22,9 @@ export const useSnacks = () => {
 
             dispatch(snacksActions.addSnack(createdSnack));
 
-            setTimeout(() => {
-                if (snacks?.find((snack) => snack.id === createdSnack.id)) {
-                    dispatch(snacksActions.removeSnack(createdSnack.id));
-                }
+            //TODO implement clearTimeout during extra removing snack
+            const timeoutId = setTimeout(() => {
+                dispatch(snacksActions.removeSnack(createdSnack.id));
             }, 5000);
         },
         removeSnack: (snack: Pick<Snack, 'id'>) => dispatch(snacksActions.removeSnack(snack.id)),

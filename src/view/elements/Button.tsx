@@ -16,14 +16,14 @@ interface ButtonProps {
 }
 
 // Styles
-const ButtonWrapper = styled.button<ButtonProps>(({ size }) => ({
+const ButtonWrapper = styled.button<ButtonProps>(({ theme, size }) => ({
     position:        'relative',
     margin:          0,
     overflow:        'hidden',
     fontFamily:      'Trebuchet MS',
     backgroundColor: 'rgb(71,77,115)',
     border:          '2px outset #393e5c',
-    color:           '#fff',
+    color:           theme.font,
     cursor:          'pointer',
     borderRadius:    `${(() => {
         if (size === 'small') {
