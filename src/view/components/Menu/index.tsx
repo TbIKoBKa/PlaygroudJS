@@ -54,13 +54,9 @@ export const Menu: FC = () => {
         setTogglerAction({ type: 'isAdditionVisible', value: !isAdditionVisible });
     };
 
-    const onChangeFontSize = (newValue: number) => {
-        setFontSize(newValue);
-    };
+    const onChangeFontSize = (newValue: number) => setFontSize(newValue);
 
-    const onChangeTabSize = (newValue: number) => {
-        setTabSize(newValue);
-    };
+    const onChangeTabSize = (newValue: number) => setTabSize(newValue);
 
     const onEmailButtonClick = () => {
         const link = 'mailto:zhenya.mormul@gmail.com';
@@ -72,17 +68,11 @@ export const Menu: FC = () => {
         window.open(link, 'Telegram');
     };
 
-    const onCreateFileButtonClick = () => {
-        createNewFile({ type: 'file', name: 'test.txt' });
-    };
+    const onCreateFileButtonClick = () => createNewFile({ type: 'file', name: 'test.txt' });
 
-    const onCreateDirectoryButtonClick = () => {
-        createNewFile({ type: 'directory', name: 'test' });
-    };
+    const onCreateDirectoryButtonClick = () => createNewFile({ type: 'directory', name: 'test' });
 
-    const onClickFile = (fullPath: string) => {
-        setActiveFile({ fullPath });
-    };
+    const onClickFile = (fullPath: string) => setActiveFile({ fullPath });
 
     return (
         <Container open = { isMenuVisible }>
