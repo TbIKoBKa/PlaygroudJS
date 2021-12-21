@@ -68,11 +68,11 @@ const AccordionHeader = styled.div<StyledAccordionProps>(({
     padding:       '16px',
     cursor:        'pointer',
     borderRadius:  `${open ? '6px 6px 0 0' : '6px'}`,
+    transition:    'transform .2s ease-in-out',
     [ '&:hover' ]: {
         backgroundColor: 'rgb(71, 77, 115)',
         [ '& > *' ]:     {
-            transform:  `${!labelVisible ? 'scale(1.3)' : 'scale(1)'}`,
-            transition: 'transform .2s ease-in-out',
+            transform: `${!labelVisible ? 'scale(1.3)' : 'scale(1)'}`,
         },
     },
 }));
