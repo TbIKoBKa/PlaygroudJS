@@ -15,6 +15,9 @@ export const useSnacks = () => {
     const dispatch = useDispatch();
     const snacks = useSelector((state) => state.snacks);
 
+    // eslint-disable-next-line no-undef
+    const snacksIds: NodeJS.Timeout[] = [];
+
     return {
         snacks,
         addSnack: (snack: Omit<Snack, 'id'>) => {
@@ -26,7 +29,17 @@ export const useSnacks = () => {
             const timeoutId = setTimeout(() => {
                 dispatch(snacksActions.removeSnack(createdSnack.id));
             }, 5000);
+
+            snacksIds.push(timeoutId);
         },
-        removeSnack: (snack: Pick<Snack, 'id'>) => dispatch(snacksActions.removeSnack(snack.id)),
+        removeSnack: (snack: Pick<Snack, 'id'>) => {
+            if (snacks) {
+                const index = snacks.findIndex((snackItem) => snackItem.id === snack.id);
+
+                clearTimeout(snacksIds[ index ]);
+            }
+
+            dispatch(snacksActions.removeSnack(snack.id));
+        },
     };
 };

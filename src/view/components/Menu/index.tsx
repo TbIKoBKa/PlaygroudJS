@@ -25,6 +25,7 @@ export const Menu: FC = () => {
             isAdditionVisible,
             isFileSystemVisible,
             isMenuVisible,
+            isCreatingFile,
         },
         setTogglerAction,
     } = useTogglersRedux();
@@ -54,6 +55,10 @@ export const Menu: FC = () => {
         setTogglerAction({ type: 'isAdditionVisible', value: !isAdditionVisible });
     };
 
+    const toggleCreatingFile = (value: boolean) => {
+        setTogglerAction({ type: 'isCreatingFile', value });
+    };
+
     const onChangeFontSize = (newValue: number) => setFontSize(newValue);
 
     const onChangeTabSize = (newValue: number) => setTabSize(newValue);
@@ -68,9 +73,9 @@ export const Menu: FC = () => {
         window.open(link, 'Telegram');
     };
 
-    const onCreateFileButtonClick = () => createNewFile({ type: 'file', name: 'test.txt' });
+    const onCreateFileButtonClick = (name: string) => createNewFile({ type: 'file', name });
 
-    const onCreateDirectoryButtonClick = () => createNewFile({ type: 'directory', name: 'test' });
+    const onCreateDirectoryButtonClick = (name: string) => createNewFile({ type: 'directory', name });
 
     const onClickFile = (fullPath: string) => setActiveFile({ fullPath });
 
@@ -87,8 +92,10 @@ export const Menu: FC = () => {
                 <MenuBody>
                     <FileSystem
                         filesystem = { filesystem }
+                        isCreatingFile = { isCreatingFile }
                         isFileSystemVisible = { isFileSystemVisible }
                         isMenuVisible = { isMenuVisible }
+                        toggleCreatingFile = { toggleCreatingFile }
                         toggleFileSystemVisibility = { toggleFileSystemVisibility }
                         onClickFile = { onClickFile }
                         onCreateDirectoryButtonClick = { onCreateDirectoryButtonClick }

@@ -13,22 +13,26 @@ import { FileSystemState } from '../../bus/filesystem/types';
 // Interfaces
 interface FileSystemProps {
     filesystem: FileSystemState
+    isCreatingFile: boolean
     isMenuVisible: boolean
     isFileSystemVisible: boolean
     toggleFileSystemVisibility: Function
     onCreateDirectoryButtonClick: Function
     onCreateFileButtonClick: Function
+    toggleCreatingFile: (value: boolean) => void
     onClickFile: (fullpath: string) => void
 }
 
 export const FileSystem: FC<FileSystemProps> = ({
     filesystem,
-    isFileSystemVisible,
+    isCreatingFile,
     isMenuVisible,
-    onClickFile,
+    isFileSystemVisible,
+    toggleFileSystemVisibility,
     onCreateDirectoryButtonClick,
     onCreateFileButtonClick,
-    toggleFileSystemVisibility,
+    toggleCreatingFile,
+    onClickFile,
 }) => {
     return (
         <Accordion
@@ -44,6 +48,8 @@ export const FileSystem: FC<FileSystemProps> = ({
             onClickHandle = { toggleFileSystemVisibility }>
             <FileTreeControls
                 activePath = { filesystem.activePath }
+                isCreatingFile = { isCreatingFile }
+                toggleCreatingFile = { toggleCreatingFile }
                 onCreateDirectory = { onCreateDirectoryButtonClick }
                 onCreateFile = { onCreateFileButtonClick }
             />

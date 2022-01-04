@@ -13,6 +13,7 @@ const initialState = {
     isAdditionVisible:     false,
     isMenuVisible:         true,
     isFileSystemVisible:   true,
+    isCreatingFile:        false,
 };
 
 // Types

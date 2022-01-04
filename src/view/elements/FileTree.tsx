@@ -29,8 +29,9 @@ export const FileTree: FC<FileTreeProps> = ({ filesystem, onClickFile }) => {
     return (
         <TreeContainer>
             {
-                activeDirectory
-                    ? (function getDirectory(): ReactNode {
+                filesystem.activePath === '/' && activeDirectory.length === 0
+                    ? <p>No files created</p>
+                    : (function getDirectory(): ReactNode {
                         return activeDirectory.map((file, i) => {
                             const FileJSX = (
                                 <File
@@ -56,7 +57,6 @@ export const FileTree: FC<FileTreeProps> = ({ filesystem, onClickFile }) => {
                             return FileJSX;
                         });
                     }())
-                    : null
             }
         </TreeContainer>
     );
