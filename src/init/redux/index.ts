@@ -7,6 +7,7 @@ import errors from '../../bus/client/errors';
 import settings from '../../bus/settings/slice';
 import filesystem from '../../bus/filesystem/slice';
 import snacks from '../../bus/snacks/slice';
+import openFiles from '../../bus/openFiles/slice';
 
 // Middleware
 import { middleware, sagaMiddleware } from './middleware';
@@ -21,6 +22,7 @@ export const store = configureStore({
         settings,
         filesystem,
         snacks,
+        openFiles,
     },
     middleware,
     devTools: process.env.NODE_ENV !== 'production',

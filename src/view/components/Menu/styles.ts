@@ -13,7 +13,7 @@ export const Container = styled.section<MenuProps>(({ open }) => ({
     borderRadius:    '8px',
     overflow:        'hidden',
     width:           `${open ? '100%' : 'fit-content'}`,
-    transition:      'width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;',
+    transition:      'width 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
 }));
 
 export const MenuBody = styled.div(() => ({
