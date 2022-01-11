@@ -2,14 +2,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-// Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 // Elements
 import { Button, Label } from '.';
 
 // Icons
-import { faFolder, faFile } from '@fortawesome/free-solid-svg-icons';
+import { FaFolder, FaFile } from 'react-icons/fa';
 
 // Types
 import { GeneralData } from '../../bus/filesystem/types';
@@ -44,10 +41,11 @@ export const File: FC<FileProps> = ({ name, type, onClick, nestCoef }) => {
     return (
         <StyledFile onClick = { onClick }>
             <FileLabel nestCoef = { nestCoef }>
-                <FontAwesomeIcon
-                    icon = { type === 'directory' ? faFolder : faFile }
-                    style = {{ marginRight: '4px' }}
-                />
+                {
+                    type === 'directory'
+                        ? <FaFolder style = {{ marginRight: '4px' }} />
+                        : <FaFile style = {{ marginRight: '4px' }} />
+                }
                 {name}
             </FileLabel>
         </StyledFile>

@@ -6,10 +6,10 @@
 import React, { FC, useState } from 'react';
 
 // Elements
-import { Label } from '../../elements';
+import { Label, Button } from '../../elements';
 
 // Styles
-import { Container, ResultContainer, Button, MessageWrapper } from './styles';
+import { Container, ResultContainer, MessageWrapper } from './styles';
 
 // Interfaces
 interface PropTypes {
@@ -116,7 +116,17 @@ export const ResultGround: FC<PropTypes> = ({ code }) => {
                     ))
                 }
             </ResultContainer>
-            <Button onClick = { onButtonClick }>Result</Button>
+            <Button
+                addStyle = {{
+                    minHeight:       '50px',
+                    backgroundColor: 'rgb(40, 43, 64)',
+                    borderRadius:    '6px',
+                    fontFamily:      'inherit',
+                    fontSize:        '20px',
+                }}
+                onClick = { onButtonClick }>
+                Result
+            </Button>
         </Container>
     );
 };

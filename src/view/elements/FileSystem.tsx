@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import { Accordion, FileTreeControls, FileTree } from '.';
 
 // Icons
-import { faFileAlt } from '@fortawesome/free-solid-svg-icons';
+import { RiNodeTree } from 'react-icons/ri';
 
 // Types
 import { FileSystemState } from '../../bus/filesystem/types';
@@ -41,7 +41,7 @@ export const FileSystem: FC<FileSystemProps> = ({
                 backgroundColor: 'rgb(52, 57, 84)',
             }}
             direction = 'vertical'
-            faIcon = { faFileAlt }
+            icon = { RiNodeTree }
             label = 'File System'
             labelVisible = { isMenuVisible }
             open = { isFileSystemVisible }

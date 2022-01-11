@@ -2,11 +2,8 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-// Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 // Icons
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { FaExclamationCircle } from 'react-icons/fa';
 
 // Types
 import { Snack as SnackType } from '../../bus/snacks/types';
@@ -39,10 +36,7 @@ export const Snack: FC<SnackProps> = ({ title, type, onClick }) => (
     <SnackWrapper
         type = { type }
         onClick = { () => onClick() }>
-        <FontAwesomeIcon
-            icon = { faExclamationCircle }
-            style = {{ marginRight: '6px' }}
-        />
+        <FaExclamationCircle style = {{ marginRight: '6px' }} />
         {title}
     </SnackWrapper>
 );

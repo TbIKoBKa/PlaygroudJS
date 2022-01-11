@@ -13,7 +13,7 @@ export const Routes: FC = () => (
         <RouterRoutes>
             <Route
                 element = { <Main /> }
-                path = '/'
+                path = '/*'
             />
         </RouterRoutes>
     </Suspense>

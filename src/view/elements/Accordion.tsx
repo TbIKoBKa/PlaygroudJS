@@ -1,26 +1,23 @@
 // Core
 import React, { FC, CSSProperties } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconType } from 'react-icons';
 
 // Elements
 import { Label } from '.';
-
-// Icons
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 // Interfaces
 interface AccordionProps {
     open: boolean
     onClickHandle: Function
     label?: string
-    faIcon?: IconDefinition
-    direction: 'vertical' | 'horizontal',
-    noAnimatedHeaderIcon?: boolean,
-    noBodyPadding?: boolean,
-    labelVisible?: boolean,
-    bodyStyle?: CSSProperties,
-    headerStyle?: CSSProperties,
+    icon?: IconType
+    direction: 'vertical' | 'horizontal'
+    noAnimatedHeaderIcon?: boolean
+    noBodyPadding?: boolean
+    labelVisible?: boolean
+    bodyStyle?: CSSProperties
+    headerStyle?: CSSProperties
 }
 
 // Types
@@ -90,7 +87,7 @@ export const Accordion: FC<AccordionProps> = ({
     onClickHandle,
     label,
     children,
-    faIcon,
+    icon: Icon,
     direction,
     noAnimatedHeaderIcon,
     noBodyPadding,
@@ -134,13 +131,14 @@ export const Accordion: FC<AccordionProps> = ({
                     return null;
                 }()) }
                 {
-                    faIcon && (
-                        <FontAwesomeIcon
-                            icon = { faIcon }
-                            style = { direction === 'vertical' && !noAnimatedHeaderIcon && labelVisible ? {
-                                transform:  `rotate(${open ? '-90deg' : '0deg'})`,
-                                transition: 'transform .2s ease-in-out',
-                            } : {} }
+                    Icon && (
+                        <Icon style = {
+                            direction === 'vertical' && !noAnimatedHeaderIcon && labelVisible
+                                ? {
+                                    transform:  `rotate(${open ? '-90deg' : '0deg'})`,
+                                    transition: 'transform .2s ease-in-out',
+                                } : {}
+                        }
                         />
                     )
                 }

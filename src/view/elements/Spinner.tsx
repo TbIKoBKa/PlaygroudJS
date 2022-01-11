@@ -1,11 +1,11 @@
 // Core
 import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { SizeProp } from '@fortawesome/fontawesome-svg-core';
+
+// Icons
+import { FaCog } from 'react-icons/fa';
 
 interface SpinnerProps {
-    size?: SizeProp
     absolute?: boolean
 }
 
@@ -39,9 +39,8 @@ const Container = styled.div<{ isActive: boolean, absolute: boolean }>`
 // eslint-disable-next-line init-declarations
 let timerId: ReturnType<typeof setTimeout>;
 
-export const Spinner: FC<SpinnerProps> = ({ size = '5x', absolute = false }) => {
+export const Spinner: FC<SpinnerProps> = ({ absolute = false }) => {
     const [ isActive, setIsActive ] = useState(false);
-
 
     useEffect(() => {
         timerId = setTimeout(() => void setIsActive(true), 500);
@@ -53,13 +52,7 @@ export const Spinner: FC<SpinnerProps> = ({ size = '5x', absolute = false }) => 
         <Container
             absolute = { absolute }
             isActive = { isActive }>
-            <FontAwesomeIcon
-                spin
-                color = '#faa307'
-                icon = 'cog'
-                size = { size }
-                title = 'Loading...'
-            />
+            <FaCog />
         </Container>
     );
 };

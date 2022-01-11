@@ -1,22 +1,20 @@
 // Core
-import React, { ChangeEvent, FC, KeyboardEvent, useEffect, useRef } from 'react';
+import React, { ChangeEvent, FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import parse from 'html-react-parser';
 
 // Elements
-import { Accordion, CodeInputArea } from '../../elements';
+import { CodeInputArea } from '../../elements';
 
 // Styles
-import { ContentContainer, Container } from './styles';
+import { ContentContainer, Container, Navigation, NavItem } from './styles';
 
 // Hooks
 import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useSettings } from '../../../bus/settings';
+import { useOpenFiles } from '../../../bus/openFiles';
 
 // Helpers
 import { getParsedCode } from '../../../tools/helpers';
-
-// Icons
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 // Interfaces
 interface PropTypes {
@@ -33,7 +31,10 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
         setTogglerAction,
     } = useTogglersRedux();
 
+    const [ activeFileId, setActiveFileId ] = useState('');
+
     const { settings } = useSettings();
+    const { openFiles } = useOpenFiles();
 
     const selectionPosition = useRef<number>(-1);
     const codeAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -48,7 +49,12 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
         }
     }, [ code ]);
 
-    const onCodeHeaderClick = () => setTogglerAction({ type: 'isCodeAreaVisible', value: !isCodeAreaVisible });
+    useEffect(() => {
+        console.log(activeFileId);
+        if (openFiles) {
+            onChangeCode(openFiles.find((file) => file.id === activeFileId)?.content || '');
+        }
+    }, [ activeFileId ]);
 
     const onChangeTextArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
         onChangeCode(event.target.value);
@@ -79,12 +85,17 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
             <ContentContainer
                 maxSize
                 active = { isCodeAreaVisible }>
-                <Accordion
-                    direction = 'vertical'
-                    faIcon = { faChevronLeft }
-                    label = 'Code'
-                    open = { isCodeAreaVisible }
-                    onClickHandle = { onCodeHeaderClick }>
+                <Navigation>
+                    {openFiles?.map((file) => (
+                        <NavItem
+                            active = { file.id === activeFileId }
+                            key = { file.id }
+                            onClick = { () => setActiveFileId(file.id) }>
+                            {file.fullpath.split('/').at(-1)}
+                        </NavItem>
+                    )) }
+                </Navigation>
+                <div style = {{ position: 'relative', height: '100%', width: '100%' }}>
                     <CodeInputArea
                         fontSize = { settings.fontSize }
                         ref = { codeAreaRef }
@@ -105,7 +116,7 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
                     }}>
                         {parse(getParsedCode(code))}
                     </pre>
-                </Accordion>
+                </div>
             </ContentContainer>
         </Container>
     );

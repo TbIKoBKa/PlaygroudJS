@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import { Accordion, Slider } from '.';
 
 // Icons
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { FaCog } from 'react-icons/fa';
 
 // Types
 import { Settings as SettingsType } from '../../bus/settings/types';
@@ -37,7 +37,7 @@ export const Settings: FC<SettingsProps> = ({
                 backgroundColor: 'rgb(52, 57, 84)',
             }}
             direction = 'vertical'
-            faIcon = { faCog }
+            icon = { FaCog }
             label = 'Settings'
             labelVisible = { isMenuVisible }
             open = { isSettingVisible }

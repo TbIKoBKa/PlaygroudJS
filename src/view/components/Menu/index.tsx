@@ -13,7 +13,7 @@ import { Accordion, Addition, FileSystem, Settings } from '../../elements';
 import { Container, MenuBody } from './styles';
 
 // Icons
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FaBars } from 'react-icons/fa';
 
 export const Menu: FC = () => {
     const { settings, setFontSize, setTabSize } = useSettings();
@@ -84,7 +84,7 @@ export const Menu: FC = () => {
             <Accordion
                 noBodyPadding
                 direction = 'horizontal'
-                faIcon = { faBars }
+                icon = { FaBars }
                 label = 'Menu'
                 labelVisible = { isMenuVisible }
                 open = { isMenuVisible }

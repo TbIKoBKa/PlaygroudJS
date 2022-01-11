@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Button, Input } from '.';
 
 // Icons
-import { faFileMedical, faFolderPlus, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { VscNewFile, VscNewFolder, VscCheck, VscClose } from 'react-icons/vsc';
 
 // Interfaces
 interface FileTreeControlsProps {
@@ -81,7 +81,11 @@ export const FileTreeControls: FC<FileTreeControlsProps> = ({
                     ? (
                         <ButtonsGroup>
                             <Button
-                                faIcon = { faCheck }
+                                addStyle = {{
+                                    padding: '3px 6px',
+                                }}
+                                icon = { VscCheck }
+                                iconProps = {{ size: 16, strokeWidth: 0.5 }}
                                 size = 'small'
                                 onClick = { () => {
                                     if (creatingTypeFile === 'file') {
@@ -94,7 +98,11 @@ export const FileTreeControls: FC<FileTreeControlsProps> = ({
                                 } }
                             />
                             <Button
-                                faIcon = { faTimes }
+                                addStyle = {{
+                                    padding: '3px 6px',
+                                }}
+                                icon = { VscClose }
+                                iconProps = {{ size: 16, strokeWidth: 0.5 }}
                                 size = 'small'
                                 onClick = { resetInput }
                             />
@@ -104,7 +112,11 @@ export const FileTreeControls: FC<FileTreeControlsProps> = ({
             }
             <ButtonsGroup>
                 <Button
-                    faIcon = { faFileMedical }
+                    addStyle = {{
+                        padding: '3px 6px',
+                    }}
+                    icon = { VscNewFile }
+                    iconProps = {{ strokeWidth: 0.5, size: 16 }}
                     size = 'small'
                     onClick = { () => {
                         toggleCreatingFile(true);
@@ -113,7 +125,11 @@ export const FileTreeControls: FC<FileTreeControlsProps> = ({
                     } }
                 />
                 <Button
-                    faIcon = { faFolderPlus }
+                    addStyle = {{
+                        padding: '3px 6px',
+                    }}
+                    icon = { VscNewFolder }
+                    iconProps = {{ strokeWidth: 0.5, size: 16 }}
                     size = 'small'
                     onClick = { () => {
                         toggleCreatingFile(true);

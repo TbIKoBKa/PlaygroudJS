@@ -14,6 +14,7 @@ const initialState = {
     isMenuVisible:         true,
     isFileSystemVisible:   true,
     isCreatingFile:        false,
+    isAuthModalVisible:    false,
 };
 
 // Types

@@ -5,7 +5,8 @@ import React, { FC } from 'react';
 import { Accordion, Button } from '.';
 
 // Icons
-import { faPlus, faInbox, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { BsPlusLg } from 'react-icons/bs';
+import { FaInbox, FaPaperPlane } from 'react-icons/fa';
 
 // Interfaces
 interface AdditionProps {
@@ -29,18 +30,18 @@ export const Addition: FC<AdditionProps> = ({
                 backgroundColor: 'rgb(52, 57, 84)',
             }}
             direction = 'vertical'
-            faIcon = { faPlus }
+            icon = { BsPlusLg }
             label = 'Addition'
             labelVisible = { isMenuVisible }
             open = { isAdditionVisible }
             onClickHandle = { toggleAdditionVisibility }>
             <Button
-                faIcon = { faInbox }
+                icon = { FaInbox }
                 onClick = { onEmailButtonClick }>
                 Email
             </Button>
             <Button
-                faIcon = { faPaperPlane }
+                icon = { FaPaperPlane }
                 onClick = { onTelegramButtonClick }>
                 Telegram
             </Button>

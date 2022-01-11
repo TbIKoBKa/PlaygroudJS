@@ -3,6 +3,7 @@ import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 // State
 export interface File {
+    id: string
     fullpath: string
     content: string
 }

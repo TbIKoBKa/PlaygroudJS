@@ -1,22 +1,19 @@
 // Core
 import React, { FC, useRef, MouseEventHandler } from 'react';
-import styled from 'styled-components';
-
-// Components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-// Icons
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import styled, { CSSProperties } from 'styled-components';
+import { IconType, IconBaseProps } from 'react-icons';
 
 // Interfaces
 interface ButtonProps {
-    size?: 'small' | 'medium' | 'large',
-    faIcon?: IconDefinition,
-    onClick?: Function,
+    size?: 'small' | 'medium' | 'large'
+    icon?: IconType
+    iconProps?: IconBaseProps
+    addStyle?: CSSProperties
+    onClick?: Function
 }
 
 // Styles
-const ButtonWrapper = styled.button<ButtonProps>(({ theme, size }) => ({
+const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle }) => ({
     position:        'relative',
     margin:          0,
     overflow:        'hidden',
@@ -52,7 +49,7 @@ const ButtonWrapper = styled.button<ButtonProps>(({ theme, size }) => ({
 
         return '18px';
     })()}`,
-    [ 'span' ]: {
+    [ '& > span' ]: {
         position:      'absolute',
         background:    '#fff',
         transform:     'translate(-50%, -50%)',
@@ -60,9 +57,13 @@ const ButtonWrapper = styled.button<ButtonProps>(({ theme, size }) => ({
         borderRadius:  '50%',
         animation:     'animate 1s ease-out',
     },
+    [ '& > *:not(span)' ]: {
+        pointerEvents: 'none',
+    },
+    ...addStyle,
 }));
 
-export const Button: FC<ButtonProps> = ({ size = 'medium', faIcon, children, onClick }) => {
+export const Button: FC<ButtonProps> = ({ size = 'medium', icon: Icon, iconProps, addStyle, children, onClick }) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     const onClickHandle: MouseEventHandler<HTMLButtonElement> & Function = (event) => {
@@ -87,12 +88,13 @@ export const Button: FC<ButtonProps> = ({ size = 'medium', faIcon, children, onC
 
     return (
         <ButtonWrapper
+            addStyle = { addStyle }
             ref = { buttonRef }
             size = { size }
             onClick = { onClickHandle }>
-            {faIcon && (
-                <FontAwesomeIcon
-                    icon = { faIcon }
+            {Icon && (
+                <Icon
+                    { ...iconProps }
                     style = {{
                         marginRight: `${children ? '8px' : '0px'}`,
                     }}
