@@ -9,8 +9,7 @@ import { Button } from '.';
 import { VscChromeClose } from 'react-icons/vsc';
 
 interface ModalProps {
-    visible: boolean,
-    setVisible: Function,
+    navigateTo: (to: string) => void,
 }
 
 const ModalBackground = styled.div(() => ({
@@ -35,17 +34,18 @@ const ModalContainer = styled.div(() => ({
 export const ModalBody = styled.div(() => ({
     display:        'flex',
     justifyContent: 'center',
-    padding:        '0 16px 6px',
+    flexDirection:  'column' as 'column',
+    padding:        '0 32px 24px',
 }));
 
 const ModalHeaderStyled = styled.div(() => ({
     display:        'flex',
     justifyContent: 'space-between',
     alignItems:     'center',
-    padding:        '6px 16px',
+    padding:        '24px 32px',
 }));
 
-export const ModalHeader: FC<Omit<ModalProps, 'visible'>> = ({ setVisible, children }) => {
+export const ModalHeader: FC<Omit<ModalProps, 'visible'>> = ({ navigateTo, children }) => {
     return (
         <ModalHeaderStyled>
             {children}
@@ -55,7 +55,7 @@ export const ModalHeader: FC<Omit<ModalProps, 'visible'>> = ({ setVisible, child
                         padding: '3px 6px',
                     }}
                     size = 'small'
-                    onClick = { () => setVisible(false) }>
+                    onClick = { () => navigateTo('..') }>
                     <VscChromeClose
                         fill = '#f1f2f3'
                         size = { 24 }
@@ -66,12 +66,8 @@ export const ModalHeader: FC<Omit<ModalProps, 'visible'>> = ({ setVisible, child
     );
 };
 
-export const Modal: FC<ModalProps> = ({ visible, setVisible, children }) => {
+export const Modal: FC<ModalProps> = ({ navigateTo, children }) => {
     const modalRef = useRef<HTMLDivElement>(null);
-
-    if (!visible) {
-        return null;
-    }
 
     return (
         <ModalBackground
@@ -80,7 +76,7 @@ export const Modal: FC<ModalProps> = ({ visible, setVisible, children }) => {
                 const target = event.target as HTMLInputElement;
 
                 if (target.className === modalRef.current?.className) {
-                    setVisible(false);
+                    navigateTo('..');
                 }
             } }>
             <ModalContainer>

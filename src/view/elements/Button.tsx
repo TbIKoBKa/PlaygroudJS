@@ -8,12 +8,16 @@ interface ButtonProps {
     size?: 'small' | 'medium' | 'large'
     icon?: IconType
     iconProps?: IconBaseProps
+    titleIconRelation?: 'row' | 'row-reverse'
     addStyle?: CSSProperties
     onClick?: Function
 }
 
 // Styles
-const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle }) => ({
+const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle, titleIconRelation }) => ({
+    display:         'flex',
+    flexDirection:   titleIconRelation,
+    alignItems:      'center',
     position:        'relative',
     margin:          0,
     overflow:        'hidden',
@@ -63,7 +67,15 @@ const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle }) => 
     ...addStyle,
 }));
 
-export const Button: FC<ButtonProps> = ({ size = 'medium', icon: Icon, iconProps, addStyle, children, onClick }) => {
+export const Button: FC<ButtonProps> = ({
+    size = 'medium',
+    icon: Icon,
+    iconProps,
+    addStyle,
+    titleIconRelation = 'row',
+    onClick,
+    children,
+}) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     const onClickHandle: MouseEventHandler<HTMLButtonElement> & Function = (event) => {
@@ -91,6 +103,7 @@ export const Button: FC<ButtonProps> = ({ size = 'medium', icon: Icon, iconProps
             addStyle = { addStyle }
             ref = { buttonRef }
             size = { size }
+            titleIconRelation = { titleIconRelation }
             onClick = { onClickHandle }>
             {Icon && (
                 <Icon

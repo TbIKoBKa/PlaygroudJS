@@ -1,37 +1,37 @@
 // Core
 import React, { FC } from 'react';
-
-import { useTogglersRedux } from '../../../bus/client/togglers';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 // Containers
 import { MainBody, Footer, Header } from '../../containers';
 
 // Components
-import { ErrorBoundary } from '../../components';
-
-// Elements
-import { Modal, ModalHeader, ModalBody } from '../../elements';
+import { ErrorBoundary, AuthModal, RegisterModal } from '../../components';
 
 // Styles
-import * as S from './styles';
+import { Container } from './styles';
 
 const Main: FC = () => {
-    const { togglersRedux: { isAuthModalVisible }, setTogglerAction } = useTogglersRedux();
+    const navigate = useNavigate();
 
-    const setAuthModalVisible = (value: boolean) => setTogglerAction({ type: 'isAuthModalVisible', value });
+    const navigateTo = (to: string) => navigate(to);
 
     return (
-        <S.Container>
-            <Header setAuthModalVisible = { setAuthModalVisible } />
+        <Container>
+            <Header navigateTo = { navigateTo } />
             <MainBody />
             <Footer />
-            <Modal
-                setVisible = { setAuthModalVisible }
-                visible = { isAuthModalVisible }>
-                <ModalHeader setVisible = { setAuthModalVisible } />
-                <ModalBody />
-            </Modal>
-        </S.Container>
+            <Routes>
+                <Route
+                    element = { <AuthModal navigateTo = { navigateTo } /> }
+                    path = '/login'
+                />
+                <Route
+                    element = { <RegisterModal navigateTo = { navigateTo } /> }
+                    path = '/register'
+                />
+            </Routes>
+        </Container>
     );
 };
 
