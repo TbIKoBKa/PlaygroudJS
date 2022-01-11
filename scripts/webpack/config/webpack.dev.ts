@@ -11,12 +11,9 @@ export const getDevConfig = () => {
     return merge(
         getCommonConfig(),
         {
-            mode:      'development',
-            devtool:   'eval-cheap-module-source-map',
-            stats:     'none',
-            devServer: {
-                hot: true,
-            },
+            mode:    'development',
+            devtool: 'eval-cheap-module-source-map',
+            stats:   'none',
         },
         modules.loadImagesDev(),
         modules.loadDevCss(),
