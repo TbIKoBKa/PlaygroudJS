@@ -5,6 +5,9 @@ import styled from 'styled-components';
 // Elements
 import { Button } from '.';
 
+// Icons
+import { VscChromeClose } from 'react-icons/vsc';
+
 interface ModalProps {
     visible: boolean,
     setVisible: Function,
@@ -22,9 +25,10 @@ const ModalBackground = styled.div(() => ({
 }));
 
 const ModalContainer = styled.div(() => ({
-    backgroundColor: '#f1f2f3',
+    backgroundColor: 'rgb(56,61,91)',
+    boxShadow:       '0px 2px 6px #010203',
     borderRadius:    '8px',
-    color:           '#010203',
+    color:           '#f1f2f3',
     minWidth:        '600px',
 }));
 
@@ -47,17 +51,15 @@ export const ModalHeader: FC<Omit<ModalProps, 'visible'>> = ({ setVisible, child
             {children}
             <div style = {{ marginLeft: '12px' }}>
                 <Button
+                    addStyle = {{
+                        padding: '3px 6px',
+                    }}
                     size = 'small'
-                    onClick = { () => setVisible(false) } >
-                    <svg
-                        height = { 20 }
-                        viewBox = '0 0 352 512'
-                        width = { 20 }>
-                        <path
-                            d = 'M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z'
-                            fill = '#000'>
-                        </path>
-                    </svg>
+                    onClick = { () => setVisible(false) }>
+                    <VscChromeClose
+                        fill = '#f1f2f3'
+                        size = { 24 }
+                    />
                 </Button>
             </div>
         </ModalHeaderStyled>
