@@ -18,7 +18,15 @@ export const optimizeBuild = (): Configuration => ({
 
         // production: минификация JavaScript.
         minimize:  true,
-        minimizer: [ new TerserPlugin() ],
+        minimizer: [
+            new TerserPlugin(),
+            // new ImageMinimizerPlugin({
+            //     test:      /\.(jpe?g|png|gif|svg)$/i,
+            //     minimizer: {
+            //         implementation: ImageMinimizerPlugin.imageminMinify,
+            //     },
+            // }),
+        ],
 
         // production: останавливает эмит сборки при возникновении ошибки во время компиляции.
         emitOnErrors: true,

@@ -7,7 +7,7 @@ type RegisterContract = (data: ReturnType<typeof sagaActions.registerUserAction>
 
 // Tools
 import { API_URL } from '../../../../init/constants';
-const ROUTE = 'register';
+const ROUTE = 'users/register';
 
 export const registerUser: RegisterContract = async (data) => {
     const response = await fetch(`${API_URL}/${ROUTE}`, {
@@ -18,7 +18,7 @@ export const registerUser: RegisterContract = async (data) => {
         body: JSON.stringify(data),
     });
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
         throw new Error();
     }
 

@@ -16,12 +16,14 @@ import { useTogglersRedux } from '../bus/client/togglers';
 import { GlobalStyles, defaultTheme } from '../assets';
 
 // Styles
-export const AppContainer = styled.div`
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-`;
+export const AppContainer = styled.div(() => ({
+    height:           '100vh',
+    width:            '100vw',
+    display:          'grid',
+    gridTemplateRows: '60px calc(100vh - 60px - 48px - 24px) 48px',
+    rowGap:           '12px',
+    backgroundColor:  'rgb(27,34,64)',
+}));
 
 export const App: FC = () => {
     const { setTogglerAction } = useTogglersRedux();

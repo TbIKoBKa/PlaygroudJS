@@ -10,6 +10,9 @@ export const AuthRow = styled.div(() => ({
     [ '&:not(:last-child)' ]: {
         marginBottom: '12px',
     },
+    [ '&:last-child' ]: {
+        marginTop: '20px',
+    },
 }));
 
 export const AuthFooter = styled.div(() => ({

@@ -10,11 +10,12 @@ interface ButtonProps {
     iconProps?: IconBaseProps
     titleIconRelation?: 'row' | 'row-reverse'
     addStyle?: CSSProperties
+    onHoverStyle?: CSSProperties
     onClick?: Function
 }
 
 // Styles
-const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle, titleIconRelation }) => ({
+const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle, onHoverStyle, titleIconRelation }) => ({
     display:         'flex',
     flexDirection:   titleIconRelation,
     alignItems:      'center',
@@ -26,6 +27,7 @@ const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle, title
     border:          '2px outset #393e5c',
     color:           theme.font,
     cursor:          'pointer',
+    transition:      'ease-out .2s',
     borderRadius:    `${(() => {
         if (size === 'small') {
             return '2px';
@@ -53,6 +55,10 @@ const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle, title
 
         return '18px';
     })()}`,
+    [ '&:hover' ]: {
+        backgroundColor: 'rgb(79, 87, 128)',
+        ...onHoverStyle,
+    },
     [ '& > span' ]: {
         position:      'absolute',
         background:    '#fff',

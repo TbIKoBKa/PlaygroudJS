@@ -14,3 +14,4 @@ export * from './Addition';
 export * from './Snack';
 export * from './Input';
 export * from './Modal';
+export * from './ButtonGroup';

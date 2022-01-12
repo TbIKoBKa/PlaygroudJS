@@ -15,7 +15,6 @@ export const getDevConfig = () => {
             devtool: 'eval-cheap-module-source-map',
             stats:   'none',
         },
-        modules.loadImagesDev(),
         modules.loadDevCss(),
         // modules.connectHMR(), // TODO работать без этого плагина, тестировать
         modules.connectFriendlyErrors(),

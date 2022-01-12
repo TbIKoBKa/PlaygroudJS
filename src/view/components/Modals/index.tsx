@@ -1,6 +1,6 @@
 // Core
 import React, { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 // Hooks
 import { useUser } from '../../../bus/user';
@@ -13,13 +13,17 @@ import { StyledLabel, AuthRow, AuthFooter } from './styles';
 
 // Icons
 import { GiConfirmed } from 'react-icons/gi';
+import { CgCloseO } from 'react-icons/cg';
 
 // Interface
-interface AuthModalProps {
+interface AuthModalsProps {
     navigateTo: (to: string) => void
+    isLoggedIn: boolean
 }
 
-export const AuthModal: FC<AuthModalProps> = ({ navigateTo }) => {
+type SingleModalProps = Omit<AuthModalsProps, 'isLoggedIn'>
+
+export const AuthModal: FC<SingleModalProps> = ({ navigateTo }) => {
     const [ login, setLogin ] = useState('');
     const [ password, setPassword ] = useState('');
     const { auth } = useUser();
@@ -63,7 +67,10 @@ export const AuthModal: FC<AuthModalProps> = ({ navigateTo }) => {
                         <Button
                             icon = { GiConfirmed }
                             size = 'large'
-                            onClick = { () => auth({ login, password }) }>
+                            onClick = { () => {
+                                auth({ login, password });
+                                navigateTo('..');
+                            } }>
                             Confirm
                         </Button>
                     </AuthFooter>
@@ -73,7 +80,7 @@ export const AuthModal: FC<AuthModalProps> = ({ navigateTo }) => {
     );
 };
 
-export const RegisterModal: FC<AuthModalProps> = ({ navigateTo }) => {
+export const RegisterModal: FC<SingleModalProps> = ({ navigateTo }) => {
     const [ login, setLogin ] = useState('');
     const [ password, setPassword ] = useState('');
     const { register } = useUser();
@@ -117,12 +124,75 @@ export const RegisterModal: FC<AuthModalProps> = ({ navigateTo }) => {
                         <Button
                             icon = { GiConfirmed }
                             size = 'large'
-                            onClick = { () => register({ login, password }) }>
+                            onClick = { () => {
+                                register({ login, password });
+                                navigateTo('..');
+                            } }>
                             Confirm
                         </Button>
                     </AuthFooter>
                 </AuthRow>
             </ModalBody>
         </Modal>
+    );
+};
+
+export const LogoutModal: FC<SingleModalProps> = ({ navigateTo }) => {
+    const { logout } = useUser();
+
+    return (
+        <Modal navigateTo = { navigateTo }>
+            <ModalHeader navigateTo = { navigateTo }>
+                <Label fontSize = { 36 }>Logout</Label>
+            </ModalHeader>
+            <ModalBody>
+                <AuthRow>
+                    <Label fontSize = { 24 }>Are you sure want to logout?</Label>
+                </AuthRow>
+                <AuthRow>
+                    <AuthFooter>
+                        <Button
+                            icon = { CgCloseO }
+                            size = 'large'
+                            onClick = { () => navigateTo('..') }>
+                            Back
+                        </Button>
+                        <Button
+                            icon = { GiConfirmed }
+                            size = 'large'
+                            onClick = { () => {
+                                logout();
+                                navigateTo('..');
+                            } }>
+                            Confirm
+                        </Button>
+                    </AuthFooter>
+                </AuthRow>
+            </ModalBody>
+        </Modal>
+    );
+};
+
+export const Modals: FC<AuthModalsProps> = ({ isLoggedIn, navigateTo }) => {
+    return (
+        isLoggedIn
+            ? (
+                <Route
+                    element = { <LogoutModal navigateTo = { navigateTo } /> }
+                    path = 'logout'
+                />
+            )
+            : (
+                <>
+                    <Route
+                        element = { <AuthModal navigateTo = { navigateTo } /> }
+                        path = 'login'
+                    />
+                    <Route
+                        element = { <RegisterModal navigateTo = { navigateTo } /> }
+                        path = 'register'
+                    />
+                </>
+            )
     );
 };

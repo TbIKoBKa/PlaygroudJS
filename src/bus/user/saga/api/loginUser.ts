@@ -7,15 +7,18 @@ type LoginContract = (data: ReturnType<typeof sagaActions.loginUserAction>['payl
 
 // Tools
 import { API_URL } from '../../../../init/constants';
-const ROUTE = 'login';
+const ROUTE = 'users/login';
 
 export const loginUser: LoginContract = async(data) => {
-    const response = await fetch(`${API_URL}/${ROUTE}`, {
+    const url = new URL(`${API_URL}/${ROUTE}`);
+
+    url.search = new URLSearchParams(data).toString();
+
+    const response = await fetch(url.toString(), {
         method:  'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
     });
 
     if (response.status !== 200) {

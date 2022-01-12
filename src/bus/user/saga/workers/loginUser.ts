@@ -1,6 +1,10 @@
+// Core
+import { put } from 'redux-saga/effects';
+
 // Actions
 import { userActions } from '../../slice';
 import * as sagaActions from '../sagaActions';
+import { togglerCreatorAction } from '../../../client/togglers';
 
 // Tools
 import * as API from '../api';
@@ -13,10 +17,10 @@ export function* loginUser(action: ReturnType<typeof sagaActions.loginUserAction
     console.log('🚀action', action);
 
     const result: UserState = yield makeRequest<UserState>({
-        fetcher:           API.loginUser,
+        fetcher:           () => API.loginUser(action.payload),
         succesAction:      userActions.setUser,
-        successSideEffect: function* (result) {
-            yield console.log('successSideEffect', result);
+        successSideEffect: function* () {
+            yield put(togglerCreatorAction({ type: 'isLoggedIn', value: true }));
         },
     });
 

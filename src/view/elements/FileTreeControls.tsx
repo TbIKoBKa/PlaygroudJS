@@ -3,7 +3,7 @@ import React, { ChangeEvent, FC, useState, useRef } from 'react';
 import styled from 'styled-components';
 
 // Elements
-import { Button, Input } from '.';
+import { Button, Input, ButtonsGroup } from '.';
 
 // Icons
 import { VscNewFile, VscNewFolder, VscCheck, VscClose } from 'react-icons/vsc';
@@ -22,25 +22,6 @@ const ControlsWrapper = styled.div(() => ({
     display:        'flex',
     justifyContent: 'space-between',
     alignItems:     'center',
-}));
-
-const ButtonsGroup = styled.div(() => ({
-    display:                  'flex',
-    justifyContent:           'end',
-    [ '&:not(:last-child)' ]: {
-        marginRight: '6px',
-    },
-    [ '& > *:first-child' ]: {
-        borderTopRightRadius:   0,
-        borderBottomLeftRadius: 0,
-    },
-    [ '& > *:last-child' ]: {
-        borderTopLeftRadius:    0,
-        borderBottomLeftRadius: 0,
-    },
-    [ '& > *:not(:first-child):not(last-child)' ]: {
-        borderRadius: 0,
-    },
 }));
 
 export const FileTreeControls: FC<FileTreeControlsProps> = ({
