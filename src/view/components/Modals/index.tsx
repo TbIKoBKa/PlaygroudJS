@@ -1,6 +1,6 @@
 // Core
 import React, { FC, useState } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, To } from 'react-router-dom';
 
 // Hooks
 import { useUser } from '../../../bus/user';
@@ -17,7 +17,7 @@ import { CgCloseO } from 'react-icons/cg';
 
 // Interface
 interface AuthModalsProps {
-    navigateTo: (to: string) => void
+    navigateTo: (to: To) => void
     isLoggedIn: boolean
 }
 
@@ -69,7 +69,7 @@ export const AuthModal: FC<SingleModalProps> = ({ navigateTo }) => {
                             size = 'large'
                             onClick = { () => {
                                 auth({ login, password });
-                                navigateTo('..');
+                                navigateTo(-1 as To);
                             } }>
                             Confirm
                         </Button>
@@ -126,7 +126,7 @@ export const RegisterModal: FC<SingleModalProps> = ({ navigateTo }) => {
                             size = 'large'
                             onClick = { () => {
                                 register({ login, password });
-                                navigateTo('..');
+                                navigateTo(-1 as To);
                             } }>
                             Confirm
                         </Button>
@@ -154,7 +154,7 @@ export const LogoutModal: FC<SingleModalProps> = ({ navigateTo }) => {
                         <Button
                             icon = { CgCloseO }
                             size = 'large'
-                            onClick = { () => navigateTo('..') }>
+                            onClick = { () => navigateTo(-1 as To) }>
                             Back
                         </Button>
                         <Button
@@ -162,7 +162,7 @@ export const LogoutModal: FC<SingleModalProps> = ({ navigateTo }) => {
                             size = 'large'
                             onClick = { () => {
                                 logout();
-                                navigateTo('..');
+                                navigateTo(-1 as To);
                             } }>
                             Confirm
                         </Button>
@@ -170,29 +170,5 @@ export const LogoutModal: FC<SingleModalProps> = ({ navigateTo }) => {
                 </AuthRow>
             </ModalBody>
         </Modal>
-    );
-};
-
-export const Modals: FC<AuthModalsProps> = ({ isLoggedIn, navigateTo }) => {
-    return (
-        isLoggedIn
-            ? (
-                <Route
-                    element = { <LogoutModal navigateTo = { navigateTo } /> }
-                    path = 'logout'
-                />
-            )
-            : (
-                <>
-                    <Route
-                        element = { <AuthModal navigateTo = { navigateTo } /> }
-                        path = 'login'
-                    />
-                    <Route
-                        element = { <RegisterModal navigateTo = { navigateTo } /> }
-                        path = 'register'
-                    />
-                </>
-            )
     );
 };

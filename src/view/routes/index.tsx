@@ -1,12 +1,12 @@
 // Core
 import React, { FC, Suspense } from 'react';
-import { Routes as RouterRoutes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Routes as RouterRoutes, Route, Navigate, useNavigate, useLocation, To } from 'react-router-dom';
 
 // Hooks
 import { useTogglersRedux } from '../../bus/client/togglers';
 
 // Pages
-import { Home, NotFound } from '../pages';
+import { Home, Profile, NotFound } from '../pages';
 
 // Containers
 import { Footer, Header } from '../containers';
@@ -23,7 +23,7 @@ export const Routes: FC = () => {
 
     const { togglersRedux: { isLoggedIn }} = useTogglersRedux();
 
-    const navigateTo = (to: string) => navigate(to);
+    const navigateTo = (to: To) => navigate(to);
 
     return (
         <Suspense fallback = { <Spinner /> }>
@@ -36,35 +36,70 @@ export const Routes: FC = () => {
                 <Route
                     element = { <Home /> }
                     path = 'home/*'>
-                    {
-                        isLoggedIn
-                            ? (
-                                <Route
-                                    element = { <LogoutModal navigateTo = { navigateTo } /> }
-                                    path = 'logout'
-                                />
-                            )
-                            : (
-                                <>
-                                    <Route
-                                        element = { <AuthModal navigateTo = { navigateTo } /> }
-                                        path = 'login'
-                                    />
-                                    <Route
-                                        element = { <RegisterModal navigateTo = { navigateTo } /> }
-                                        path = 'register'
-                                    />
-                                </>
-                            )
-                    }
+                    <Route
+                        element = { <LogoutModal navigateTo = { navigateTo } /> }
+                        path = 'logout'
+                    />
+                    <Route
+                        element = { <AuthModal navigateTo = { navigateTo } /> }
+                        path = 'login'
+                    />
+                    <Route
+                        element = { <RegisterModal navigateTo = { navigateTo } /> }
+                        path = 'register'
+                    />
+                    <Route
+                        element = { <Navigate to = '../../error' /> }
+                        path = ':p/*'
+                    />
+                </Route>
+                {
+                    isLoggedIn && (
+                        <Route
+                            element = { <Profile /> }
+                            path = 'profile'>
+                            <Route
+                                element = { <LogoutModal navigateTo = { navigateTo } /> }
+                                path = 'logout'
+                            />
+                            <Route
+                                element = { <AuthModal navigateTo = { navigateTo } /> }
+                                path = 'login'
+                            />
+                            <Route
+                                element = { <RegisterModal navigateTo = { navigateTo } /> }
+                                path = 'register'
+                            />
+                            <Route
+                                element = { <Navigate to = '../../error' /> }
+                                path = ':p/*'
+                            />
+                        </Route>
+                    )
+                }
+                <Route
+                    element = { <NotFound navigateTo = { navigateTo } /> }
+                    path = ':p/*'>
+                    <Route
+                        element = { <LogoutModal navigateTo = { navigateTo } /> }
+                        path = 'logout'
+                    />
+                    <Route
+                        element = { <AuthModal navigateTo = { navigateTo } /> }
+                        path = 'login'
+                    />
+                    <Route
+                        element = { <RegisterModal navigateTo = { navigateTo } /> }
+                        path = 'register'
+                    />
                     <Route
                         element = { <Navigate to = '../../error' /> }
                         path = ':p/*'
                     />
                 </Route>
                 <Route
-                    element = { <NotFound /> }
-                    path = '*'
+                    element = { <Navigate to = 'home' /> }
+                    path = '/'
                 />
             </RouterRoutes>
             <Footer />

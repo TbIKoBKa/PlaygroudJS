@@ -16,7 +16,7 @@ interface ButtonProps {
 
 // Styles
 const ButtonWrapper = styled.button<ButtonProps>(({ theme, size, addStyle, onHoverStyle, titleIconRelation }) => ({
-    display:         'flex',
+    display:         'inline-flex',
     flexDirection:   titleIconRelation,
     alignItems:      'center',
     position:        'relative',

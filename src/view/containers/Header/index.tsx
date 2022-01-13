@@ -1,11 +1,12 @@
 // Core
 import React, { FC } from 'react';
+import { To } from 'react-router-dom';
 
 // Elements
 import { Label, Button, ButtonsGroup } from '../../elements';
 
 // Styles
-import { Container, ContainerItem } from './styles';
+import { Container, ContainerItem, Link } from './styles';
 
 // Icons
 import { CgProfile } from 'react-icons/cg';
@@ -13,7 +14,7 @@ import { AiOutlineLogout } from 'react-icons/ai';
 
 // Interfaces
 interface HeaderProps {
-    navigateTo: (to: string) => void
+    navigateTo: (to: To) => void
     isLoggedIn: boolean
     pathname: string
 }
@@ -23,7 +24,7 @@ export const Header: FC<HeaderProps> = ({ navigateTo, isLoggedIn, pathname }) =>
         <Container>
             <ContainerItem />
             <ContainerItem>
-                <Label fontSize = { 36 }>Playground</Label>
+                <Link to = '/'>Playground</Link>
             </ContainerItem>
             <ContainerItem>
                 {
@@ -42,7 +43,7 @@ export const Header: FC<HeaderProps> = ({ navigateTo, isLoggedIn, pathname }) =>
                                             borderRadius: '12px',
                                         }}
                                         size = 'large'
-                                        onClick = { () => navigateTo(`${pathname}/profile`) }>
+                                        onClick = { () => navigateTo('profile') }>
                                         <CgProfile size = { 32 } />
                                     </Button>
                                     <Button

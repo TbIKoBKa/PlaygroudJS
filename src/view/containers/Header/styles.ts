@@ -1,5 +1,6 @@
 // Core
 import styled from 'styled-components';
+import { Link as RouterLink } from 'react-router-dom';
 
 export const Container = styled.header(() => ({
     display:             'grid',
@@ -19,3 +20,9 @@ export const ContainerItem = styled.div(() => ({
         justifyContent: 'flex-end',
     },
 }));
+
+export const Link = styled(RouterLink)({
+    fontSize:       '32px',
+    textDecoration: 'none',
+    color:          '#f1f2f3',
+});

@@ -1,5 +1,6 @@
 // Core
 import React, { FC, useRef } from 'react';
+import { To } from 'react-router-dom';
 import styled from 'styled-components';
 
 // Elements
@@ -9,7 +10,7 @@ import { Button } from '.';
 import { VscChromeClose } from 'react-icons/vsc';
 
 interface ModalProps {
-    navigateTo: (to: string) => void,
+    navigateTo: (to: To) => void,
 }
 
 const ModalBackground = styled.div(() => ({
@@ -55,7 +56,7 @@ export const ModalHeader: FC<Omit<ModalProps, 'visible'>> = ({ navigateTo, child
                         padding: '3px 6px',
                     }}
                     size = 'small'
-                    onClick = { () => navigateTo('..') }>
+                    onClick = { () => navigateTo(-1 as To) }>
                     <VscChromeClose
                         fill = '#f1f2f3'
                         size = { 24 }
@@ -76,7 +77,7 @@ export const Modal: FC<ModalProps> = ({ navigateTo, children }) => {
                 const target = event.target as HTMLInputElement;
 
                 if (target.className === modalRef.current?.className) {
-                    navigateTo('..');
+                    navigateTo(-1 as To);
                 }
             } }>
             <ModalContainer>
