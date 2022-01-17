@@ -14,7 +14,7 @@ import { makeRequest } from '../../../../tools/utils';
 import { UserState } from '../../types';
 
 export function* registerUser(action: ReturnType<typeof sagaActions.registerUserAction>) {
-    console.log('🚀action', action);
+    // console.log('🚀action', action);
 
     const result: UserState = yield makeRequest<UserState>({
         fetcher:           () => API.registerUser(action.payload),
@@ -25,6 +25,6 @@ export function* registerUser(action: ReturnType<typeof sagaActions.registerUser
     });
 
     if (result !== null) {
-        console.log('outsideSuccessSideEffect');
+        // console.log('outsideSuccessSideEffect');
     }
 }

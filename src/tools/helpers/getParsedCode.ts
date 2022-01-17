@@ -12,14 +12,14 @@ export const getParsedCode = (code: string) => {
 
     parsedCode = parsedCode
         .replaceAll(/\+|-|\*|\/|=|;[^<]/g, (str) => {
-            console.log(str);
+            // console.log(str);
 
             return `<span style="color: ${colors.operator};">${str}</span>`;
         })
         .replaceAll(
             /[^n?>].?\w*\s*\(/g,
             (str) => {
-                console.log(str);
+                // console.log(str);
 
                 return `${str[ 0 ] === '.' ? '.' : ''}<span style="color: ${colors.function}">${str.slice(str[ 0 ] === '.' ? 1 : 0, -1)}</span>${str.at(-1)}`;
             },

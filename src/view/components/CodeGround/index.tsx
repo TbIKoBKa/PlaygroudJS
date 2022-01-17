@@ -50,7 +50,7 @@ export const CodeGround: FC<PropTypes> = ({ code, onChangeCode }) => {
     }, [ code ]);
 
     useEffect(() => {
-        console.log(activeFileId);
+        // console.log(activeFileId);
         if (openFiles) {
             onChangeCode(openFiles.find((file) => file.id === activeFileId)?.content || '');
         }
